@@ -26,13 +26,14 @@ background-color: white;
 }
 nav a {
 color: black;
-}
-.profile-img {
-  size: 200px;
-  padding: 20px;
+}.profile-img {
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 50%;
 }
 
 .login-btn {
-  background-color: blue;
-  text-color: white;
+    background-color: blue;
+    color: white;
 }
