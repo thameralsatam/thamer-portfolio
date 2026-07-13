@@ -6,7 +6,16 @@ body {
 background-color: black;
 font-family: arial;
 }
-p,ol,ul,img,small,b,details,h2,a,hr {
+p,
+ol,
+ul,
+img,
+small,
+b,
+details,
+h2,
+a,
+hr {
 color: white;
 }
 button {
@@ -17,4 +26,13 @@ background-color: white;
 }
 nav a {
 color: black;
+}
+.profile-img {
+  size: 200px;
+  padding: 20px;
+}
+
+.login-btn {
+  background-color: blue;
+  text-color: white;
 }
