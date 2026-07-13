@@ -36,4 +36,5 @@ color: black;
 .login-btn {
     background-color: blue;
     color: white;
+    border-radius: 25%;
 }
