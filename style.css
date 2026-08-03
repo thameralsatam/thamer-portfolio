@@ -1,40 +1,32 @@
-h1 {
-color: white;
-text-align: center;
-}
 body {
-background-color: black;
+background-image: url("background");
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+background-color: #054239;
 font-family: arial;
 }
-p,
-ol,
-ul,
-img,
-small,
-b,
-details,
-h2,
-a,
-hr {
-color: white;
-}
-button {
-width: 175px;
-}
-nav {
-background-color: white;
-}
-nav a {
-color: black;
-}.profile-img {
-    width: 200px;
-    height: 200px;
-    padding: 20px;
-    border-radius: 50%;
+
+.num1, .num2, .num3, a {
+color: #b9a779
 }
 
-.login-btn {
-  background-color: blue;
-  color: white;
-  border-radius: 15px;
+button, form input {
+background-color: #b9a779;
+border-radius: 5px;
+}
+
+form input::placeholder, button {
+color: #054239;
+}
+
+hr {
+height: 5px;
+border: none;
+border-radius: 10px;
+background-color: #b9a779
+}
+
+h1 {
+text-align: center;
 }
