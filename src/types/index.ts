@@ -1,4 +1,6 @@
-export type SupportedLanguage = 'de' | 'ar' | 'en' | 'tr';
+// اللغات المدعومة حاليا: العربية فقط.
+// لإضافة لغة لاحقا: أضفها هنا ثم أضف نصوصها في translations.ts و projects.ts.
+export type SupportedLanguage = 'ar';
 
 export type TextDirection = 'ltr' | 'rtl';
 
@@ -11,11 +13,13 @@ export type ProjectStatusKey =
 
 export interface ProjectLocalizedContent {
   title: string;
+  category: string;
   summary: string;
-  problem?: string;
-  solution?: string;
-  role?: string;
-  limitations?: string;
+  problem: string;
+  solution: string;
+  role: string;
+  limitations: string;
+  features: string[];
 }
 
 export interface ProjectLinks {
@@ -28,20 +32,11 @@ export interface Project {
   id: string;
   slug: string;
   statusKey: ProjectStatusKey;
-  category: string;
   technologies: string[];
-  features: string[];
   links: ProjectLinks;
-  coverImage?: string;
-  gallery: string[];
-  demoVideo?: string;
   featured: boolean;
+  coverImage?: string;
+  gallery?: string[];
+  demoVideo?: string;
   translations: Record<SupportedLanguage, ProjectLocalizedContent>;
-}
-
-export type ThemeMode = 'system' | 'light' | 'dark';
-
-export interface NavItem {
-  key: string;
-  path: string;
 }

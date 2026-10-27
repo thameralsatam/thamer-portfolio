@@ -1,107 +1,46 @@
 import React, { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { RotateCcw, SquareCode } from 'lucide-react';
+import { DemoFrame } from './DemoFrame';
 
-export const StudioLabDemo: React.FC<{ isArabic?: boolean }> = ({ isArabic = false }) => {
-  const [points, setPoints] = useState(8);
-  const radius = 36;
-  const [rotation, setRotation] = useState(45);
-  const [complexity, setComplexity] = useState(3);
+const INITIAL_CODE = `<h1>مرحباً</h1>
+<p>غيّر هذا النص وشاهد النتيجة فوراً.</p>
 
-  const generatePolygon = () => {
-    const coords: string[] = [];
-    const center = 50;
-    for (let i = 0; i < points; i++) {
-      const angle = (i * 2 * Math.PI) / points + (rotation * Math.PI) / 180;
-      const r = i % 2 === 0 ? radius : radius * (0.4 + complexity * 0.15);
-      const x = center + r * Math.cos(angle);
-      const y = center + r * Math.sin(angle);
-      coords.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-    }
-    return coords.join(' ');
-  };
+<style>
+  body { font-family: sans-serif; background: #fdfaf4; color: #2b2218; padding: 1rem; }
+  h1 { color: #a35b3a; font-weight: 400; }
+</style>`;
+
+export const StudioLabDemo: React.FC = () => {
+  const [code, setCode] = useState(INITIAL_CODE);
+  const srcDoc = `<!doctype html><html lang="ar" dir="rtl"><body>${code}</body></html>`;
 
   return (
-    <div className="cream-card rounded-3xl overflow-hidden shadow-xs">
-      {/* Top Header */}
-      <div className="p-4 border-b border-[#e8ded1] flex items-center justify-between bg-[#faf5ec]/70">
-        <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#241e1a]">
-          <Sparkles className="w-4 h-4 text-[#9e5a26]" />
-          <span>{isArabic ? 'ستوديو لاب: المحرك التوليدي' : 'Studio Lab: Generative Canvas'}</span>
-        </div>
-        <span className="cream-pill-accent text-[11px] font-mono px-2.5 py-0.5">
-          Procedural SVG
-        </span>
+    <DemoFrame
+      icon={<SquareCode className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
+      title="محرر ومعاينة حية"
+      note="نموذج مصغّر يحاكي فكرة المحرر، وليس المشروع نفسه."
+    >
+      <div className="grid md:grid-cols-2">
+        <textarea
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          spellCheck={false}
+          dir="ltr"
+          aria-label="الشيفرة"
+          className="h-64 w-full resize-none bg-paper-50/70 p-5 font-mono text-sm leading-7 text-ink-900 outline-none"
+        />
+        <iframe
+          title="المعاينة"
+          sandbox=""
+          srcDoc={srcDoc}
+          className="h-64 w-full border-t border-line bg-white md:border-s md:border-t-0"
+        />
       </div>
-
-      {/* SVG Canvas */}
-      <div className="p-6 bg-[#fcf9f4] flex items-center justify-center min-h-[200px]">
-        <svg className="w-44 h-44 drop-shadow-sm" viewBox="0 0 100 100">
-          {/* Ambient Guide */}
-          <circle cx="50" cy="50" r={radius} fill="none" stroke="currentColor" strokeWidth="0.5" className="text-[#caa98c]/40" />
-          
-          {/* Dynamic Procedural Mesh */}
-          <polygon
-            points={generatePolygon()}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-[#9e5a26] transition-all duration-300"
-          />
-          <polygon
-            points={generatePolygon()}
-            fill="currentColor"
-            fillOpacity="0.08"
-            className="text-[#9e5a26]"
-          />
-        </svg>
+      <div className="flex justify-end border-t border-line px-6 py-3">
+        <button type="button" onClick={() => setCode(INITIAL_CODE)} className="icon-btn" aria-label="إعادة الشيفرة">
+          <RotateCcw className="h-4 w-4" strokeWidth={1.5} />
+        </button>
       </div>
-
-      {/* Interactive Controls */}
-      <div className="p-4 border-t border-[#ede4d7] bg-[#faf5ec]/50 grid grid-cols-3 gap-3 text-xs font-mono">
-        <div>
-          <div className="flex justify-between text-[#736356] mb-1">
-            <span>{isArabic ? 'النقاط' : 'Punkte'}</span>
-            <span>{points}</span>
-          </div>
-          <input
-            type="range"
-            min="4"
-            max="16"
-            value={points}
-            onChange={(e) => setPoints(Number(e.target.value))}
-            className="w-full accent-[#9e5a26] cursor-pointer"
-          />
-        </div>
-        <div>
-          <div className="flex justify-between text-[#736356] mb-1">
-            <span>{isArabic ? 'الدوران' : 'Rotation'}</span>
-            <span>{rotation}°</span>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="360"
-            step="15"
-            value={rotation}
-            onChange={(e) => setRotation(Number(e.target.value))}
-            className="w-full accent-[#9e5a26] cursor-pointer"
-          />
-        </div>
-        <div>
-          <div className="flex justify-between text-[#736356] mb-1">
-            <span>{isArabic ? 'التعقيد' : 'Form'}</span>
-            <span>{complexity}</span>
-          </div>
-          <input
-            type="range"
-            min="1"
-            max="5"
-            value={complexity}
-            onChange={(e) => setComplexity(Number(e.target.value))}
-            className="w-full accent-[#9e5a26] cursor-pointer"
-          />
-        </div>
-      </div>
-    </div>
+    </DemoFrame>
   );
 };

@@ -2,21 +2,23 @@ import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { useRouter } from '../../router/Router';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { path } = useRouter();
+  const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen flex flex-col antialiased selection:bg-[#eddcc3] selection:text-[#502a0a]">
+    <div className="flex min-h-screen flex-col overflow-x-clip">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 z-50 px-4 py-2 cream-pill text-xs font-medium shadow-md transition-all"
+        className="btn btn-primary sr-only focus:not-sr-only focus:fixed focus:start-3 focus:top-3 z-50"
       >
-        Zum Inhalt springen
+        {t.common.skipToContent}
       </a>
       <Header />
-      <main id="main-content" className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-16">
-        <div key={path} className="animate-page-enter">
+      <main id="main-content" className="flex-1">
+        <div key={path} className="page-enter container-main pb-24 pt-12 sm:pt-20">
           {children}
         </div>
       </main>

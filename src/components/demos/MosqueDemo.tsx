@@ -1,136 +1,112 @@
 import React, { useState } from 'react';
-import { Compass, MapPin } from 'lucide-react';
+import { ArrowUp, Compass } from 'lucide-react';
+import { DemoFrame } from './DemoFrame';
 
-interface LandmarkHotspot {
+interface Spot {
   id: string;
-  nameDe: string;
-  nameAr: string;
-  descriptionDe: string;
-  descriptionAr: string;
+  name: string;
   period: string;
-  coords: { x: number; y: number };
+  description: string;
+  x: number; // نسبة مئوية من العرض
+  y: number; // نسبة مئوية من الارتفاع
 }
 
-const hotspots: LandmarkHotspot[] = [
+const SPOTS: Spot[] = [
   {
-    id: 'sahn',
-    nameDe: 'Der Große Innenhof (Sahn)',
-    nameAr: 'الصحن الكبير',
-    descriptionDe: 'Weitläufiger Arkadenhof (122m × 50m) mit zweigeschossigen Säulenreihen und Marmorpflasterung.',
-    descriptionAr: 'فناء واسع بأروقة مزدوجة وأرضيات رخامية مزينة بفسيفساء نباتية بديعة.',
-    period: '706–715 n. Chr. (Umayyaden)',
-    coords: { x: 50, y: 55 },
+    id: 'minaret',
+    name: 'مئذنة العروس',
+    period: 'أصلها من العصر الأموي',
+    description: 'مئذنة الجدار الشمالي، وتمتاز ببدنها المربع المتدرج.',
+    x: 50,
+    y: 9,
   },
   {
     id: 'dome',
-    nameDe: 'Schatzkuppel (Qubbat al-Khazna)',
-    nameAr: 'قبة الخزنة',
-    descriptionDe: 'Achteckiger Pavillon auf acht korinthischen Säulen, errichtet als Staatsschatzkammer.',
-    descriptionAr: 'قبة مثمنة على ثمانية أعمدة كورنثية لحفظ أموال بيت المال.',
-    period: '789 n. Chr. (Abbasiden)',
-    coords: { x: 28, y: 40 },
+    name: 'قبة الخزنة',
+    period: 'العصر العباسي',
+    description: 'قبة مثمنة قائمة على أعمدة في الصحن، كانت لحفظ أموال بيت المال.',
+    x: 26,
+    y: 30,
   },
   {
-    id: 'minaret',
-    nameDe: 'Brautminarett (Madhanat al-Arus)',
-    nameAr: 'مئذنة العروس',
-    descriptionDe: 'Ältestes Minarett des Bauwerks an der Nordwand mit quadratischem Grundriss.',
-    descriptionAr: 'أقدم مآذن الجامع في الجدار الشمالي وتمتاز ببدنها المربع المتدرج.',
-    period: 'Frühes 8. Jahrhundert',
-    coords: { x: 50, y: 15 },
+    id: 'sahn',
+    name: 'الصحن',
+    period: 'العصر الأموي',
+    description: 'فناء واسع تحيط به الأروقة، وتزين جدرانه فسيفساء نباتية.',
+    x: 56,
+    y: 38,
   },
   {
-    id: 'prayer-hall',
-    nameDe: 'Dreischiffige Gebetshalle',
-    nameAr: 'حرم الصلاة ثلاثي الأجنحة',
-    descriptionDe: '136 Meter lange Haupthalle mit monumentaler Adlerkuppel und antikem Säulenbestand.',
-    descriptionAr: 'قاعة صلاة ضخمة بثلاثة أروقة متوازية تتوسطها قبة النسر الشهيرة.',
-    period: '715 n. Chr.',
-    coords: { x: 50, y: 85 },
+    id: 'hall',
+    name: 'حرم الصلاة',
+    period: 'العصر الأموي',
+    description: 'قاعة الصلاة الكبرى بأروقة متوازية، تتوسطها قبة النسر.',
+    x: 50,
+    y: 86,
   },
 ];
 
-export const MosqueDemo: React.FC<{ isArabic?: boolean }> = ({ isArabic = false }) => {
-  const [activeSpot, setActiveSpot] = useState<LandmarkHotspot>(hotspots[0]);
+const ACTIVE_FILL = 'rgba(163, 91, 58, 0.2)';
+const IDLE_FILL = 'rgba(117, 104, 90, 0.07)';
+
+export const MosqueDemo: React.FC = () => {
+  const [activeId, setActiveId] = useState(SPOTS[2].id);
+  const active = SPOTS.find((s) => s.id === activeId) ?? SPOTS[0];
+  const fill = (id: string) => (id === activeId ? ACTIVE_FILL : IDLE_FILL);
+  const stroke = (id: string) => (id === activeId ? '#a35b3a' : '#9b8d7b');
 
   return (
-    <div className="cream-card rounded-3xl overflow-hidden shadow-xs">
-      {/* Top Bar */}
-      <div className="p-4 border-b border-[#e8ded1] flex items-center justify-between bg-[#faf5ec]/70">
-        <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#241e1a]">
-          <Compass className="w-4 h-4 text-[#9e5a26]" />
-          <span>{isArabic ? 'مخطط النموذج الأولي المعماري' : 'Architektur-Prototyp Explorer'}</span>
-        </div>
-        <span className="cream-pill-accent text-[11px] font-mono px-2.5 py-0.5">
-          SVG Vector Map
-        </span>
-      </div>
-
-      {/* SVG Interactive Ground Plan */}
-      <div className="p-6 bg-[#fcf9f4] relative flex items-center justify-center">
-        <div className="w-full max-w-md aspect-[16/10] relative rounded-2xl border border-[#e3d8c8] bg-[#fbf8f2] p-4 shadow-inner">
-          {/* Compass Rose */}
-          <div className="absolute top-3 right-3 text-[10px] font-mono text-[#8a7b6f] flex flex-col items-center">
-            <span>N</span>
-            <span className="text-xs">↑</span>
-          </div>
-
-          {/* SVG Mosque Layout Plan */}
-          <svg className="w-full h-full text-[#8a7b6f]" viewBox="0 0 100 100" fill="none">
-            {/* Outer Perimeter Walls */}
-            <rect x="15" y="10" width="70" height="80" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 1" />
-            
-            {/* North Arcade */}
-            <line x1="15" y1="25" x2="85" y2="25" stroke="currentColor" strokeWidth="1" />
-            
-            {/* Courtyard Sahn Area */}
-            <rect x="22" y="30" width="56" height="40" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="0.8" />
-            
-            {/* Prayer Hall Area */}
-            <rect x="15" y="75" width="70" height="15" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
-            
-            {/* Transverse Nave & Eagle Dome */}
-            <rect x="44" y="70" width="12" height="20" stroke="currentColor" strokeWidth="1.2" />
-            <circle cx="50" cy="80" r="4" stroke="currentColor" strokeWidth="1" />
+    <DemoFrame
+      icon={<Compass className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
+      title="مخطط الجامع"
+      note="رسم تخطيطي مبسّط وليس مقياساً دقيقاً. اختر نقطة لقراءة نبذة عنها."
+    >
+      <div className="px-6 py-8">
+        <div className="relative mx-auto aspect-[16/10] w-full max-w-xl">
+          <svg viewBox="0 0 160 100" className="absolute inset-0 h-full w-full" fill="none" aria-hidden="true">
+            <rect x="18" y="12" width="124" height="80" rx="2" stroke="#9b8d7b" strokeWidth="1" strokeDasharray="3 2" />
+            <rect x="75" y="2" width="10" height="10" fill={fill('minaret')} stroke={stroke('minaret')} strokeWidth="1" style={{ transition: 'all .4s' }} />
+            <rect x="26" y="20" width="108" height="38" fill={fill('sahn')} stroke={stroke('sahn')} strokeWidth="1" style={{ transition: 'all .4s' }} />
+            <circle cx="42" cy="30" r="6" fill={fill('dome')} stroke={stroke('dome')} strokeWidth="1" style={{ transition: 'all .4s' }} />
+            <rect x="18" y="62" width="124" height="30" fill={fill('hall')} stroke={stroke('hall')} strokeWidth="1" style={{ transition: 'all .4s' }} />
+            <circle cx="80" cy="73" r="6" stroke="#9b8d7b" strokeWidth="0.8" />
           </svg>
 
-          {/* Interactive Clickable Hotspots */}
-          {hotspots.map((spot) => {
-            const isSelected = activeSpot.id === spot.id;
+          <div className="absolute start-2 top-2 flex items-center gap-1 text-xs text-ink-500">
+            <ArrowUp className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
+            <span>شمال</span>
+          </div>
+
+          {SPOTS.map((spot, i) => {
+            const selected = spot.id === activeId;
             return (
               <button
                 key={spot.id}
                 type="button"
-                onClick={() => setActiveSpot(spot)}
-                style={{ left: `${spot.coords.x}%`, top: `${spot.coords.y}%` }}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none cursor-pointer ${
-                  isSelected
-                    ? 'cream-pill-primary scale-125 shadow-md ring-2 ring-[#caa98c] z-20'
-                    : 'cream-pill text-[#52453c] hover:scale-110 z-10'
+                aria-pressed={selected}
+                aria-label={spot.name}
+                onClick={() => setActiveId(spot.id)}
+                style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+                className={`absolute grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-sm transition-all duration-300 ${
+                  selected
+                    ? 'scale-110 bg-ink-900 text-paper-50 shadow-lg'
+                    : 'border border-line-strong bg-paper-50 text-ink-700 hover:scale-110'
                 }`}
-                title={isArabic ? spot.nameAr : spot.nameDe}
               >
-                <MapPin className="w-3 h-3" />
+                {i + 1}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Selected Landmark Details Pane */}
-      <div className="p-5 border-t border-[#ede4d7] bg-[#faf5ec]/50 space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <h4 className="font-display font-bold text-sm text-[#241e1a] flex items-center gap-2">
-            <span>{isArabic ? activeSpot.nameAr : activeSpot.nameDe}</span>
-          </h4>
-          <span className="cream-pill text-[11px] font-mono px-2.5 py-0.5 text-[#736356]">
-            {activeSpot.period}
-          </span>
+      <div key={active.id} className="fade-swap border-t border-line px-6 py-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h4 className="font-display text-xl text-ink-900">{active.name}</h4>
+          <span className="text-sm text-ink-500">{active.period}</span>
         </div>
-        <p className="font-sans text-xs text-[#52453c] leading-relaxed">
-          {isArabic ? activeSpot.descriptionAr : activeSpot.descriptionDe}
-        </p>
+        <p className="mt-2 text-ink-700">{active.description}</p>
       </div>
-    </div>
+    </DemoFrame>
   );
 };

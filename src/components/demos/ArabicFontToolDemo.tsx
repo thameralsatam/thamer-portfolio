@@ -1,98 +1,112 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PenTool, RotateCcw } from 'lucide-react';
+import { DemoFrame } from './DemoFrame';
 
-export const ArabicFontToolDemo: React.FC<{ isArabic?: boolean }> = ({ isArabic = false }) => {
-  // Cubic Bezier curve control points: P0 (start), P1 (ctrl 1), P2 (ctrl 2), P3 (end)
-  const [p1, setP1] = useState({ x: 25, y: 75 });
-  const [p2, setP2] = useState({ x: 75, y: 25 });
+type Point = { x: number; y: number };
+type Handle = 'p1' | 'p2';
 
-  const p0 = { x: 15, y: 50 };
-  const p3 = { x: 85, y: 50 };
+const W = 160;
+const H = 100;
+const P0: Point = { x: 26, y: 62 };
+const P3: Point = { x: 134, y: 62 };
+const START_P1: Point = { x: 54, y: 16 };
+const START_P2: Point = { x: 106, y: 92 };
 
-  const pathData = `M ${p0.x} ${p0.y} C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${p3.x} ${p3.y}`;
+const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
 
-  const resetCurve = () => {
-    setP1({ x: 25, y: 75 });
-    setP2({ x: 75, y: 25 });
+export const ArabicFontToolDemo: React.FC = () => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [p1, setP1] = useState<Point>(START_P1);
+  const [p2, setP2] = useState<Point>(START_P2);
+  const [dragging, setDragging] = useState<Handle | null>(null);
+
+  const setHandle = (h: Handle, p: Point) => (h === 'p1' ? setP1(p) : setP2(p));
+
+  const pointFromEvent = (e: React.PointerEvent): Point => {
+    const rect = svgRef.current!.getBoundingClientRect();
+    return {
+      x: Math.round(clamp(((e.clientX - rect.left) / rect.width) * W, 4, W - 4)),
+      y: Math.round(clamp(((e.clientY - rect.top) / rect.height) * H, 4, H - 4)),
+    };
   };
 
+  const onKey = (h: Handle, current: Point) => (e: React.KeyboardEvent) => {
+    const step = 4;
+    const moves: Record<string, Point> = {
+      ArrowLeft: { x: -step, y: 0 },
+      ArrowRight: { x: step, y: 0 },
+      ArrowUp: { x: 0, y: -step },
+      ArrowDown: { x: 0, y: step },
+    };
+    const m = moves[e.key];
+    if (!m) return;
+    e.preventDefault();
+    setHandle(h, { x: clamp(current.x + m.x, 4, W - 4), y: clamp(current.y + m.y, 4, H - 4) });
+  };
+
+  const reset = () => {
+    setP1(START_P1);
+    setP2(START_P2);
+  };
+
+  const d = `M ${P0.x} ${P0.y} C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${P3.x} ${P3.y}`;
+
+  const handleDot = (h: Handle, p: Point, label: string) => (
+    <circle
+      cx={p.x}
+      cy={p.y}
+      r={dragging === h ? 5 : 4}
+      fill="#a35b3a"
+      stroke="#fdfaf4"
+      strokeWidth="1.5"
+      tabIndex={0}
+      role="slider"
+      aria-label={label}
+      aria-valuetext={`${p.x}, ${p.y}`}
+      style={{ cursor: 'grab', transition: 'r .2s', outline: 'none' }}
+      onPointerDown={(e) => {
+        (e.target as Element).setPointerCapture(e.pointerId);
+        setDragging(h);
+      }}
+      onKeyDown={onKey(h, p)}
+    />
+  );
+
   return (
-    <div className="cream-card rounded-3xl overflow-hidden shadow-xs">
-      {/* Header */}
-      <div className="p-4 border-b border-[#e8ded1] flex items-center justify-between bg-[#faf5ec]/70">
-        <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#241e1a]">
-          <PenTool className="w-4 h-4 text-[#9e5a26]" />
-          <span>{isArabic ? 'فاحص منحنيات بيزييه للحرف العربي' : 'Bézier Glyph Inspector'}</span>
-        </div>
-        <button
-          type="button"
-          onClick={resetCurve}
-          className="cream-pill p-1.5 text-[#736356] hover:text-[#241e1a] cursor-pointer"
-          title="Reset"
+    <DemoFrame
+      icon={<PenTool className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
+      title="فاحص منحنيات بيزييه"
+      note="اسحب النقطتين لتغيير شكل الخط. نموذج مصغّر يحاكي فكرة الأداة."
+      footer={
+        <span dir="ltr" className="inline-block">
+          P1 ({p1.x}, {p1.y}) · P2 ({p2.x}, {p2.y})
+        </span>
+      }
+    >
+      <div className="relative px-6 py-8">
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${W} ${H}`}
+          className="mx-auto block w-full max-w-xl select-none rounded-2xl border border-line bg-paper-50/80"
+          style={{ touchAction: 'none' }}
+          onPointerMove={(e) => dragging && setHandle(dragging, pointFromEvent(e))}
+          onPointerUp={() => setDragging(null)}
+          onPointerCancel={() => setDragging(null)}
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <line x1="0" y1="62" x2={W} y2="62" stroke="#e6dccb" strokeWidth="0.6" strokeDasharray="2 2" />
+          <line x1={P0.x} y1={P0.y} x2={p1.x} y2={p1.y} stroke="#d6c8b0" strokeWidth="0.8" />
+          <line x1={P3.x} y1={P3.y} x2={p2.x} y2={p2.y} stroke="#d6c8b0" strokeWidth="0.8" />
+          <path d={d} fill="none" stroke="#2b2218" strokeOpacity="0.12" strokeWidth="9" strokeLinecap="round" />
+          <path d={d} fill="none" stroke="#a35b3a" strokeWidth="1.6" strokeLinecap="round" />
+          <circle cx={P0.x} cy={P0.y} r="2.6" fill="#2b2218" />
+          <circle cx={P3.x} cy={P3.y} r="2.6" fill="#2b2218" />
+          {handleDot('p1', p1, 'نقطة التحكم الأولى')}
+          {handleDot('p2', p2, 'نقطة التحكم الثانية')}
+        </svg>
+        <button type="button" onClick={reset} className="icon-btn absolute end-7 top-9" aria-label="إعادة المنحنى">
+          <RotateCcw className="h-4 w-4" strokeWidth={1.5} />
         </button>
       </div>
-
-      {/* Interactive Bezier Canvas */}
-      <div className="p-6 bg-[#fcf9f4] flex flex-col items-center justify-center min-h-[200px]">
-        <svg className="w-64 h-36 border border-[#e3d8c8] rounded-2xl bg-[#fbf8f2] shadow-inner" viewBox="0 0 100 100">
-          {/* Grid lines */}
-          <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" className="text-[#e0d6c8]" />
-          <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" className="text-[#e0d6c8]" />
-
-          {/* Control handle lines */}
-          <line x1={p0.x} y1={p0.y} x2={p1.x} y2={p1.y} stroke="currentColor" strokeWidth="1" className="text-[#caa98c]" />
-          <line x1={p3.x} y1={p3.y} x2={p2.x} y2={p2.y} stroke="currentColor" strokeWidth="1" className="text-[#caa98c]" />
-
-          {/* Actual Bezier Curve */}
-          <path d={pathData} fill="none" stroke="currentColor" strokeWidth="3" className="text-[#9e5a26]" />
-
-          {/* End Points */}
-          <circle cx={p0.x} cy={p0.y} r="2.5" fill="currentColor" className="text-[#241e1a]" />
-          <circle cx={p3.x} cy={p3.y} r="2.5" fill="currentColor" className="text-[#241e1a]" />
-
-          {/* Control Points */}
-          <circle cx={p1.x} cy={p1.y} r="3" fill="currentColor" className="text-[#9e5a26] ring-2 ring-[#e8ded1]" />
-          <circle cx={p2.x} cy={p2.y} r="3" fill="currentColor" className="text-[#9e5a26] ring-2 ring-[#e8ded1]" />
-        </svg>
-
-        <p className="mt-3 text-[11px] font-mono text-[#736356]">
-          Cubic Bézier: ({p1.x}, {p1.y}) → ({p2.x}, {p2.y})
-        </p>
-      </div>
-
-      {/* Control Sliders */}
-      <div className="p-4 border-t border-[#ede4d7] bg-[#faf5ec]/50 grid grid-cols-2 gap-4 text-xs font-mono">
-        <div>
-          <div className="flex justify-between text-[#736356] mb-1">
-            <span>{isArabic ? 'نقطة التحكم 1 (Y)' : 'Kontrollpunkt 1 (Y)'}</span>
-            <span>{p1.y}</span>
-          </div>
-          <input
-            type="range"
-            min="10"
-            max="90"
-            value={p1.y}
-            onChange={(e) => setP1({ ...p1, y: Number(e.target.value) })}
-            className="w-full accent-[#9e5a26] cursor-pointer"
-          />
-        </div>
-        <div>
-          <div className="flex justify-between text-[#736356] mb-1">
-            <span>{isArabic ? 'نقطة التحكم 2 (Y)' : 'Kontrollpunkt 2 (Y)'}</span>
-            <span>{p2.y}</span>
-          </div>
-          <input
-            type="range"
-            min="10"
-            max="90"
-            value={p2.y}
-            onChange={(e) => setP2({ ...p2, y: Number(e.target.value) })}
-            className="w-full accent-[#9e5a26] cursor-pointer"
-          />
-        </div>
-      </div>
-    </div>
+    </DemoFrame>
   );
 };

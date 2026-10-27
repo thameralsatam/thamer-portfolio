@@ -1,86 +1,55 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { Reveal } from '../components/common/Reveal';
 
 export const AboutPage: React.FC = () => {
   const { t } = useLanguage();
-
-  const skillGroups = [
-    {
-      title: 'Frontend Architecture',
-      items: ['React 18', 'TypeScript', 'Tailwind CSS', 'Vite', 'HTML5 & Semantic DOM'],
-    },
-    {
-      title: 'Core Principles',
-      items: ['Responsive Web Design', 'Accessibility (a11y)', 'i18n & RTL Engineering', 'Predictable State Flow'],
-    },
-    {
-      title: 'Tooling & Workflow',
-      items: ['Git & GitHub', 'Cloudflare Pages', 'Linux & Modern Shell', 'DevTools Profiling'],
-    },
-    {
-      title: 'Specialized Focus',
-      items: ['Arabic Web Typography', 'Procedural SVG & Canvas', 'Disciplined Engineering'],
-    },
-  ];
+  const a = t.aboutPage;
 
   return (
-    <div className="max-w-2xl space-y-12 py-4 sm:py-8">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 cream-pill text-xs font-mono">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#9e5a26]" />
-          <span className="text-[#635447]">{t.siteSubtitle}</span>
+    <div>
+      <Reveal>
+        <p className="eyebrow">{a.eyebrow}</p>
+      </Reveal>
+      <Reveal delay={80}>
+        <h1 className="display mt-8">{a.title}</h1>
+      </Reveal>
+      <Reveal delay={160}>
+        <p className="lead mt-8">{a.lead}</p>
+      </Reveal>
+
+      <Reveal>
+        <div className="mt-16 space-y-6 sm:mt-24">
+          <p className="prose-ar">{a.bio1}</p>
+          <p className="prose-ar">{a.bio2}</p>
         </div>
-        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#241e1a]">
-          {t.aboutPage.title}
-        </h1>
-      </div>
+      </Reveal>
 
-      {/* Main Narrative Card: Natural Typography & Breathing Space */}
-      <div className="cream-card rounded-3xl p-6 sm:p-8 space-y-4">
-        <span className="font-mono text-xs uppercase tracking-wider text-[#9e5a26] font-semibold block">
-          {t.aboutPage.roleHeadline}
-        </span>
-        <div className="space-y-4 font-sans text-sm sm:text-base text-[#40352d] leading-relaxed">
-          <p>{t.aboutPage.bioParagraph1}</p>
-          <p>{t.aboutPage.bioParagraph2}</p>
-        </div>
-      </div>
+      <Reveal>
+        <section className="mt-20 border-t border-line pt-10">
+          <h2 className="title mb-10">{a.stackHeading}</h2>
+          <div className="grid gap-10 sm:grid-cols-3">
+            {a.stackGroups.map((group) => (
+              <div key={group.title}>
+                <h3 className="heading mb-3">{group.title}</h3>
+                <ul className="text-ink-700">
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
-      {/* Technical Competencies: Quiet, Non-Cluttered Matrix */}
-      <div className="cream-card rounded-3xl p-6 sm:p-8 space-y-6">
-        <h2 className="font-display text-xl sm:text-2xl font-bold text-[#241e1a]">
-          {t.aboutPage.skillsHeading}
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-          {skillGroups.map((group, idx) => (
-            <div key={idx} className="space-y-2.5">
-              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-[#241e1a] border-b border-[#ede4d7] pb-1.5">
-                {group.title}
-              </h3>
-              <ul className="space-y-1.5 text-xs font-sans text-[#52453c]">
-                {group.items.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <span className="w-1 h-1 rounded-full bg-[#9e5a26]" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Engineering Philosophy */}
-      <div className="cream-card rounded-3xl p-6 sm:p-8 space-y-3">
-        <h2 className="font-display text-xl font-bold text-[#241e1a]">
-          {t.aboutPage.philosophyHeading}
-        </h2>
-        <p className="font-sans text-sm sm:text-base text-[#40352d] leading-relaxed">
-          {t.aboutPage.philosophyText}
-        </p>
-      </div>
+      <Reveal>
+        <section className="mt-20 border-t border-line pt-10">
+          <h2 className="title mb-6">{a.approachHeading}</h2>
+          <p className="prose-ar">{a.approachText}</p>
+          <p className="prose-ar mt-6 text-ink-900">{a.seekingText}</p>
+        </section>
+      </Reveal>
     </div>
   );
 };
