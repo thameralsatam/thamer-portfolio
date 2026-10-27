@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Kufam', sans-serif;
+  --font-sans: 'IBM Plex Sans', 'IBM Plex Sans Arabic', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+:root {
+  /* Permanent Cream Gradient Palette */
+  --bg-gradient-top: #fefcf9;
+  --bg-gradient-mid: #faf5ed;
+  --bg-gradient-bottom: #f3ede2;
+
+  --text-main: #241e1a;
+  --text-muted: #6b5e53;
+  --text-subtle: #968677;
+
+  --surface-top: #ffffff;
+  --surface-bottom: #faf5ec;
+  --surface-border: #e8ded1;
+  --surface-border-hover: #caa98c;
+
+  --pill-bg-top: #ffffff;
+  --pill-bg-bottom: #f4eee2;
+  --pill-text: #382e27;
+  --pill-border: #e3d8c8;
+
+  --pill-primary-top: #3d332b;
+  --pill-primary-bottom: #261f1a;
+  --pill-primary-text: #fefcf9;
+
+  --pill-accent-top: #f7eedd;
+  --pill-accent-bottom: #eddcc3;
+  --pill-accent-text: #7c4417;
+  --pill-accent-border: #e2cca9;
+
+  --floating-bg: rgba(254, 251, 246, 0.88);
+  --accent-color: #9e5a26;
+  --accent-hover: #83471a;
+}
+
+@layer base {
+  html {
+    font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic', sans-serif;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(180deg, var(--bg-gradient-top) 0%, var(--bg-gradient-mid) 45%, var(--bg-gradient-bottom) 100%) fixed;
+    color: var(--text-main);
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic', sans-serif;
+    min-height: 100vh;
+    color: var(--text-main);
+    background: transparent;
+  }
+
+  /* All Headings strictly Kufam */
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'Kufam', sans-serif !important;
+  }
+
+  /* All General Elements strictly IBM Plex Sans */
+  p, span, a, button, input, textarea, select, label, summary, small, li, div, .font-sans {
+    font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic', sans-serif;
+  }
+
+  /* Monospace elements strictly IBM Plex Mono */
+  code, pre, .font-mono {
+    font-family: 'IBM Plex Mono', monospace !important;
+  }
+}
+
+.font-display {
+  font-family: 'Kufam', sans-serif !important;
+}
+
+.font-sans {
+  font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic', sans-serif !important;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', monospace !important;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Cream Palette Capsule Styles with Subtle Gradients */
+.cream-pill {
+  background: linear-gradient(180deg, var(--pill-bg-top) 0%, var(--pill-bg-bottom) 100%);
+  color: var(--pill-text);
+  border: 1px solid var(--pill-border);
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(78, 64, 53, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cream-pill:hover {
+  border-color: var(--surface-border-hover);
+  box-shadow: 0 3px 8px rgba(78, 64, 53, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.cream-pill-primary {
+  background: linear-gradient(180deg, var(--pill-primary-top) 0%, var(--pill-primary-bottom) 100%) !important;
+  color: var(--pill-primary-text) !important;
+  border: 1px solid #1f1814 !important;
+  border-radius: 9999px;
+  box-shadow: 0 3px 8px rgba(36, 30, 26, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cream-pill-primary:hover {
+  opacity: 0.94;
+  box-shadow: 0 5px 12px rgba(36, 30, 26, 0.25);
+  transform: translateY(-0.5px);
+}
+
+.cream-pill-accent {
+  background: linear-gradient(180deg, var(--pill-accent-top) 0%, var(--pill-accent-bottom) 100%);
+  color: var(--pill-accent-text);
+  border: 1px solid var(--pill-accent-border);
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(124, 68, 23, 0.06);
+}
+
+.cream-card {
+  background: linear-gradient(180deg, var(--surface-top) 0%, var(--surface-bottom) 100%);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 4px 20px -2px rgba(84, 69, 56, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cream-card:hover {
+  border-color: var(--surface-border-hover);
+  box-shadow: 0 12px 28px -4px rgba(84, 69, 56, 0.09), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.cream-header {
+  background: var(--floating-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 10px 25px -4px rgba(84, 69, 56, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.cream-inset {
+  background: linear-gradient(180deg, #f5efe4 0%, #faf5ec 100%);
+  border: 1px solid #e7ddcf;
+  box-shadow: inset 0 1px 3px rgba(84, 69, 56, 0.04);
+}
