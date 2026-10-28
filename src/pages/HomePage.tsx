@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowDown, Globe, Hammer, Layers } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowDown, Globe, Hammer, Layers, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { getFeaturedProjects, projects } from '../data/projects';
 import { Link } from '../router/Router';
@@ -9,15 +9,53 @@ import { DirectionalArrow } from '../components/common/DirectionalArrow';
 import { Words } from '../components/common/Words';
 
 export const HomePage: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const featured = getFeaturedProjects();
-  const facts = [
-    { Icon: Layers, num: projects.length, label: t.home.stats.projects },
-    { Icon: Globe, num: projects.filter((p) => p.links.liveUrl).length, label: t.home.stats.live },
+  const [activeFactIndex, setActiveFactIndex] = useState<number | null>(null);
+
+  const factsData = [
     {
+      id: 'all',
+      Icon: Layers,
+      num: projects.length,
+      label: t.home.stats.projects,
+      items: projects.map((p) => ({
+        slug: p.slug,
+        title: p.translations[language].title,
+        category: p.translations[language].category,
+      })),
+      ctaLink: '/projects',
+      ctaText: t.home.allProjects,
+    },
+    {
+      id: 'live',
+      Icon: Globe,
+      num: projects.filter((p) => p.links.liveUrl).length,
+      label: t.home.stats.live,
+      items: projects
+        .filter((p) => p.links.liveUrl)
+        .map((p) => ({
+          slug: p.slug,
+          title: p.translations[language].title,
+          category: p.translations[language].category,
+        })),
+      ctaLink: null,
+      ctaText: null,
+    },
+    {
+      id: 'inProgress',
       Icon: Hammer,
       num: projects.filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool').length,
       label: t.home.stats.inProgress,
+      items: projects
+        .filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool')
+        .map((p) => ({
+          slug: p.slug,
+          title: p.translations[language].title,
+          category: p.translations[language].category,
+        })),
+      ctaLink: null,
+      ctaText: null,
     },
   ];
 
@@ -49,16 +87,72 @@ export const HomePage: React.FC = () => {
         </Reveal>
       </section>
 
-      <section aria-label={t.home.stats.aria} className="facts">
-        {facts.map((fact) => (
-          <div key={fact.label} className="fact">
-            <span className="fact-icon" aria-hidden="true">
-              <fact.Icon className="h-4.5 w-4.5" strokeWidth={1.5} />
-            </span>
-            <span className="fact-num">{fact.num}</span>
-            <span className="fact-label">{fact.label}</span>
+      <section aria-label={t.home.stats.aria} className="facts-container">
+        <div className="facts">
+          {factsData.map((fact, index) => {
+            const isSelected = activeFactIndex === index;
+            return (
+              <button
+                key={fact.id}
+                type="button"
+                onClick={() => setActiveFactIndex((curr) => (curr === index ? null : index))}
+                className={`fact ${isSelected ? 'is-active' : ''}`}
+                aria-expanded={isSelected}
+                aria-controls="fact-detail-panel"
+              >
+                {/* الرمز في الزاوية العلوية بعيداً عن حشو المحتوى */}
+                <span className="fact-corner-icon" aria-hidden="true">
+                  <fact.Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.5} />
+                </span>
+
+                {/* الرقم الأساسي في المنتصف */}
+                <span className="fact-num">{fact.num}</span>
+
+                {/* التسمية بالمنتصف أسفل الرقم */}
+                <span className="fact-label">{fact.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* لوحة التفاصيل التفاعلية لكشف المشاريع عند النقر */}
+        {activeFactIndex !== null && (
+          <div id="fact-detail-panel" className="fact-detail">
+            <div className="fact-detail-header">
+              <span className="fact-detail-title">
+                {factsData[activeFactIndex].label} ({factsData[activeFactIndex].num})
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveFactIndex(null)}
+                className="fact-detail-close"
+                aria-label={t.common.closeMenu}
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+
+            <div className="fact-detail-list">
+              {factsData[activeFactIndex].items.slice(0, 4).map((item) => (
+                <Link
+                  key={item.slug}
+                  to={`/projects/${item.slug}`}
+                  className="fact-detail-item"
+                >
+                  <span className="fact-detail-item-title">{item.title}</span>
+                  <span className="fact-detail-item-cat">{item.category}</span>
+                  <DirectionalArrow direction="forward" className="h-3.5 w-3.5 text-clay-600 opacity-60" />
+                </Link>
+              ))}
+              {factsData[activeFactIndex].ctaLink && (
+                <Link to={factsData[activeFactIndex].ctaLink!} className="fact-detail-cta">
+                  <span>{factsData[activeFactIndex].ctaText}</span>
+                  <DirectionalArrow direction="forward" className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
           </div>
-        ))}
+        )}
       </section>
 
       <section id="projects" className="scroll-mt-24">

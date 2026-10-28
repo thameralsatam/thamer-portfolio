@@ -5,12 +5,12 @@ const STORAGE_KEY = 'thamer_portfolio_lang';
 
 // الألمانية هي الافتراضية إذا كانت لغة الجهاز غير مدعومة.
 export const DEFAULT_LANGUAGE: SupportedLanguage = 'de';
-export const SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ar', 'en', 'de'];
+export const SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ar', 'de', 'en'];
 
 export const LANGUAGE_LABELS: Record<SupportedLanguage, { short: string; nativeName: string }> = {
-  ar: { short: 'ع', nativeName: 'العربية' },
-  en: { short: 'EN', nativeName: 'English' },
-  de: { short: 'DE', nativeName: 'Deutsch' },
+  ar: { short: 'عربي', nativeName: 'عربي' },
+  de: { short: 'Deutsch', nativeName: 'Deutsch' },
+  en: { short: 'English', nativeName: 'English' },
 };
 
 function isSupported(code: string | null | undefined): code is SupportedLanguage {
