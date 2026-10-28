@@ -3,25 +3,32 @@ import { translations, UIStrings } from './translations';
 
 const STORAGE_KEY = 'thamer_portfolio_lang';
 
-export const DEFAULT_LANGUAGE: SupportedLanguage = 'ar';
-export const SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ar'];
+// الألمانية هي الافتراضية إذا كانت لغة الجهاز غير مدعومة.
+export const DEFAULT_LANGUAGE: SupportedLanguage = 'de';
+export const SUPPORTED_LANGUAGES: SupportedLanguage[] = ['ar', 'en', 'de'];
 
-export const LANGUAGE_LABELS: Record<SupportedLanguage, { label: string; nativeName: string }> = {
-  ar: { label: 'العربية', nativeName: 'العربية' },
+export const LANGUAGE_LABELS: Record<SupportedLanguage, { short: string; nativeName: string }> = {
+  ar: { short: 'ع', nativeName: 'العربية' },
+  en: { short: 'EN', nativeName: 'English' },
+  de: { short: 'DE', nativeName: 'Deutsch' },
 };
+
+function isSupported(code: string | null | undefined): code is SupportedLanguage {
+  return !!code && (SUPPORTED_LANGUAGES as string[]).includes(code);
+}
 
 export function getInitialLanguage(): SupportedLanguage {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage | null;
-    if (saved && SUPPORTED_LANGUAGES.includes(saved)) return saved;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (isSupported(saved)) return saved;
   } catch {
     // التخزين غير متاح
   }
   try {
-    const browserLanguages = navigator.languages || [navigator.language || ''];
+    const browserLanguages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
     for (const raw of browserLanguages) {
-      const code = raw.toLowerCase().split('-')[0] as SupportedLanguage;
-      if (SUPPORTED_LANGUAGES.includes(code)) return code;
+      const code = (raw || '').toLowerCase().split('-')[0];
+      if (isSupported(code)) return code;
     }
   } catch {
     // نكمل بالافتراضي

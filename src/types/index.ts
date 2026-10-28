@@ -1,6 +1,6 @@
 // اللغات المدعومة حاليا: العربية فقط.
 // لإضافة لغة لاحقا: أضفها هنا ثم أضف نصوصها في translations.ts و projects.ts.
-export type SupportedLanguage = 'ar';
+export type SupportedLanguage = 'ar' | 'en' | 'de';
 
 export type TextDirection = 'ltr' | 'rtl';
 

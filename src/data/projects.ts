@@ -1,4 +1,8 @@
-import { Project } from '../types';
+import { Project, ProjectLocalizedContent } from '../types';
+import { projectTexts } from './projectTexts';
+
+type RawProject = Omit<Project, 'translations'> & { translations: { ar: ProjectLocalizedContent } };
+
 
 /**
  * مصدر واحد لبيانات المشاريع.
@@ -6,7 +10,7 @@ import { Project } from '../types';
  * روابط run.app التجريبية وروابط المستودعات الخاصة لا تُنشر هنا.
  * أسماء ستوديو لاب وأداة الخطوط لم تُحسم نهائياً بعد.
  */
-export const projects: Project[] = [
+const rawProjects: RawProject[] = [
   {
     id: 'fontat',
     slug: 'fontat',
@@ -161,6 +165,16 @@ export const projects: Project[] = [
     },
   },
 ];
+
+// أي لغة لا يتوفر نصها بعد تعرض النص العربي بدل أن تتعطل الصفحة.
+export const projects: Project[] = rawProjects.map((p) => ({
+  ...p,
+  translations: {
+    ar: p.translations.ar,
+    en: projectTexts.en?.[p.id] ?? p.translations.ar,
+    de: projectTexts.de?.[p.id] ?? p.translations.ar,
+  },
+}));
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

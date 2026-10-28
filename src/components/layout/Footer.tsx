@@ -50,9 +50,9 @@ export const Footer: React.FC = () => {
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="footer-top"
-            aria-label="العودة إلى الأعلى"
+            aria-label={t.footer.topLabel}
           >
-            <span>الأعلى</span>
+            <span>{t.footer.top}</span>
             <ArrowUp className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>

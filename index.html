@@ -2,6 +2,25 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var L = ['ar', 'en', 'de'];
+          var s = localStorage.getItem('thamer_portfolio_lang');
+          var l = L.indexOf(s) > -1 ? s : null;
+          if (!l) {
+            var n = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+            for (var i = 0; i < n.length; i++) {
+              var c = (n[i] || '').toLowerCase().split('-')[0];
+              if (L.indexOf(c) > -1) { l = c; break; }
+            }
+          }
+          l = l || 'de';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fdfaf4" />
     <title>ثامر السطام — معرض أعمال</title>

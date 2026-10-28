@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Link, useRouter } from '../../router/Router';
+import { LanguageSwitcher } from '../common/LanguageSwitcher';
 
 export const Header: React.FC = () => {
   const { t } = useLanguage();
@@ -37,7 +38,7 @@ export const Header: React.FC = () => {
 
   return (
     <header className={`site-header ${scrolled || menuOpen ? 'is-scrolled' : ''}`}>
-      <div className="container-main flex h-[4.5rem] items-center justify-between">
+      <div className="container-main flex h-[4.5rem] items-center justify-between gap-3">
         <Link to="/" className="brand">
           {t.siteTitle}
         </Link>
@@ -50,16 +51,19 @@ export const Header: React.FC = () => {
           ))}
         </nav>
 
-        <button
-          type="button"
-          className="icon-btn md:hidden"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          aria-label={menuOpen ? t.common.closeMenu : t.common.openMenu}
-        >
-          {menuOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            type="button"
+            className="icon-btn md:hidden"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? t.common.closeMenu : t.common.openMenu}
+          >
+            {menuOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

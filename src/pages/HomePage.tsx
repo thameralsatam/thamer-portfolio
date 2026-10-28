@@ -12,12 +12,12 @@ export const HomePage: React.FC = () => {
   const { t } = useLanguage();
   const featured = getFeaturedProjects();
   const facts = [
-    { Icon: Layers, num: projects.length, label: 'مشاريع' },
-    { Icon: Globe, num: projects.filter((p) => p.links.liveUrl).length, label: 'منشورة على الإنترنت' },
+    { Icon: Layers, num: projects.length, label: t.home.stats.projects },
+    { Icon: Globe, num: projects.filter((p) => p.links.liveUrl).length, label: t.home.stats.live },
     {
       Icon: Hammer,
       num: projects.filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool').length,
-      label: 'قيد التطوير',
+      label: t.home.stats.inProgress,
     },
   ];
 
@@ -49,15 +49,13 @@ export const HomePage: React.FC = () => {
         </Reveal>
       </section>
 
-      <section aria-label="نظرة سريعة" className="facts">
+      <section aria-label={t.home.stats.aria} className="facts">
         {facts.map((fact) => (
           <div key={fact.label} className="fact">
-            <span className="fact-head">
-              <span className="icon-tile">
-                <fact.Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
-              </span>
-              <span className="fact-num">{fact.num}</span>
+            <span className="fact-icon" aria-hidden="true">
+              <fact.Icon className="h-4.5 w-4.5" strokeWidth={1.5} />
             </span>
+            <span className="fact-num">{fact.num}</span>
             <span className="fact-label">{fact.label}</span>
           </div>
         ))}
