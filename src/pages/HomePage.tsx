@@ -67,7 +67,7 @@ export const HomePage: React.FC = () => {
           <p className="eyebrow">{t.home.eyebrow}</p>
         </Reveal>
         <Reveal delay={90}>
-          <h1 className="display mt-8 max-w-3xl">
+          <h1 className="display mt-8 max-w-4xl">
             <Words text={t.home.heroHeadline} />
           </h1>
         </Reveal>
