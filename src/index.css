@@ -861,6 +861,26 @@ body::after { display: none; }
   background: rgba(138, 74, 45, 0.05);
 }
 
+@media (min-width: 1024px) {
+  .facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .facts .fact.fact-featured {
+    grid-column: 1 / -1;
+    border-inline-start: none !important;
+    border-bottom: 1px solid #d9ccb4;
+    padding: 1.65rem 1.25rem 1.5rem;
+  }
+  .facts .fact:nth-child(2) {
+    border-inline-start: none !important;
+    padding: 1.4rem 0.85rem 1.25rem;
+  }
+  .facts .fact:nth-child(3) {
+    border-inline-start: 1px solid #d9ccb4 !important;
+    padding: 1.4rem 0.85rem 1.25rem;
+  }
+}
+
 /* الرمز في الزاوية العلوية: هادئ وبعيد عن المحتوى المركزي */
 .fact-corner-icon {
   position: absolute;
@@ -883,6 +903,15 @@ body::after { display: none; }
   font-weight: 400;
   color: var(--color-ink-900);
   line-height: 1;
+}
+
+@media (min-width: 1024px) {
+  .facts .fact.fact-featured .fact-num {
+    font-size: 2.75rem;
+  }
+  .facts .fact:not(.fact-featured) .fact-num {
+    font-size: 2.25rem;
+  }
 }
 
 /* التسمية بالمنتصف تحت الرقم */
