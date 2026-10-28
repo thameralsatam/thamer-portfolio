@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Check, CircleAlert, Code, Cog, Lightbulb, ListChecks, UserRound } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useRouter, Link } from '../router/Router';
 import { projects, getProjectBySlug } from '../data/projects';
@@ -53,10 +53,10 @@ export const ProjectDetailPage: React.FC = () => {
   };
 
   const story = [
-    { label: t.common.problem, text: loc.problem },
-    { label: t.common.solution, text: loc.solution },
-    { label: t.common.roleAndAiUsage, text: loc.role },
-    { label: t.common.limitations, text: loc.limitations },
+    { Icon: Lightbulb, label: t.common.problem, text: loc.problem },
+    { Icon: Cog, label: t.common.solution, text: loc.solution },
+    { Icon: UserRound, label: t.common.roleAndAiUsage, text: loc.role },
+    { Icon: CircleAlert, label: t.common.limitations, text: loc.limitations },
   ];
 
   return (
@@ -110,7 +110,12 @@ export const ProjectDetailPage: React.FC = () => {
         {story.map((block, i) => (
           <Reveal key={block.label} delay={i * 40}>
             <div className="border-t border-line py-10 md:grid md:grid-cols-[11rem_1fr] md:gap-10">
-              <h2 className="heading mb-3 md:sticky md:top-28 md:mb-0 md:self-start">{block.label}</h2>
+              <div className="mb-4 md:sticky md:top-28 md:mb-0 md:self-start">
+                <span className="icon-tile mb-3">
+                  <block.Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+                </span>
+                <h2 className="heading">{block.label}</h2>
+              </div>
               <p className="prose-ar">{block.text}</p>
             </div>
           </Reveal>
@@ -119,14 +124,27 @@ export const ProjectDetailPage: React.FC = () => {
 
       <Reveal>
         <section className="grid gap-12 border-t border-line py-10 md:grid-cols-[11rem_1fr] md:gap-10">
-          <h2 className="heading">{t.common.technologies}</h2>
+          <div>
+            <span className="icon-tile mb-3">
+              <Code className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+            </span>
+            <h2 className="heading">{t.common.technologies}</h2>
+          </div>
           <p className="prose-ar">{project.technologies.join(' · ')}</p>
         </section>
         <section className="grid gap-4 border-t border-line py-10 md:grid-cols-[11rem_1fr] md:gap-10">
-          <h2 className="heading">{t.common.features}</h2>
+          <div>
+            <span className="icon-tile mb-3">
+              <ListChecks className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+            </span>
+            <h2 className="heading">{t.common.features}</h2>
+          </div>
           <ul className="feature-list prose-ar">
             {loc.features.map((feature) => (
-              <li key={feature}>{feature}</li>
+              <li key={feature}>
+                <Check className="check-icon" strokeWidth={2} aria-hidden="true" />
+                <span>{feature}</span>
+              </li>
             ))}
           </ul>
         </section>

@@ -59,7 +59,7 @@ export interface UIStrings {
     copy: string;
     copied: string;
   };
-  footer: { copyright: string; tagline: string };
+  footer: { copyright: string; tagline: string; heading: string; text: string };
 }
 
 export const translations: Record<SupportedLanguage, UIStrings> = {
@@ -143,6 +143,8 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
     footer: {
       copyright: 'ثامر السطام',
       tagline: 'مواقع وتطبيقات وأدوات للخط العربي.',
+      heading: 'عندك سؤال أو فرصة؟',
+      text: 'يسعدني أن أسمع منك عن المشاريع، أو عن فرص التدريب والتعاون.',
     },
   },
 };

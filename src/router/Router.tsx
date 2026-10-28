@@ -5,6 +5,7 @@ interface RouterContextType {
   path: string;
   navigate: (to: string) => void;
   params: Record<string, string>;
+  nudge: number;
 }
 
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
@@ -36,8 +37,15 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     };
   }, []);
 
+  const [nudge, setNudge] = useState(0);
+
   const navigate = (to: string) => {
-    if (to === path) return;
+    if (to === path) {
+      // نفس الصفحة: لا إعادة تحميل، فقط تنبيه لطيف وعودة ناعمة للأعلى
+      setNudge((n) => n + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     // For universal static compatibility on Cloudflare Pages and preview environments
     window.history.pushState({}, '', to);
     const apply = () => {
@@ -62,7 +70,7 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }
 
   return (
-    <RouterContext.Provider value={{ path, navigate, params }}>
+    <RouterContext.Provider value={{ path, navigate, params, nudge }}>
       {children}
     </RouterContext.Provider>
   );

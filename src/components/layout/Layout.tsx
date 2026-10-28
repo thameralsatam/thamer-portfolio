@@ -6,7 +6,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { getProjectBySlug } from '../../data/projects';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { path, params } = useRouter();
+  const { path, params, nudge } = useRouter();
   const { t, language } = useLanguage();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <Header />
       <main id="main-content" className="flex-1">
         <div key={path} className="page-enter container-main pb-24 pt-12 sm:pt-20">
-          {children}
+          <div className={nudge === 0 ? '' : nudge % 2 ? 'nudge-a' : 'nudge-b'}>{children}</div>
         </div>
       </main>
       <Footer />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Globe, Hammer, Layers } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { getFeaturedProjects, projects } from '../data/projects';
 import { Link } from '../router/Router';
@@ -11,6 +11,15 @@ import { Words } from '../components/common/Words';
 export const HomePage: React.FC = () => {
   const { t } = useLanguage();
   const featured = getFeaturedProjects();
+  const facts = [
+    { Icon: Layers, num: projects.length, label: 'مشاريع' },
+    { Icon: Globe, num: projects.filter((p) => p.links.liveUrl).length, label: 'منشورة على الإنترنت' },
+    {
+      Icon: Hammer,
+      num: projects.filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool').length,
+      label: 'قيد التطوير',
+    },
+  ];
 
   return (
     <div className="space-y-24 sm:space-y-36">
@@ -41,18 +50,17 @@ export const HomePage: React.FC = () => {
       </section>
 
       <section aria-label="نظرة سريعة" className="facts">
-        <div className="fact">
-          <span className="fact-num">{projects.length}</span>
-          <span className="fact-label">مشاريع</span>
-        </div>
-        <div className="fact">
-          <span className="fact-num">{new Set(projects.flatMap((p) => p.technologies)).size}</span>
-          <span className="fact-label">تقنية مستخدمة</span>
-        </div>
-        <div className="fact">
-          <span className="fact-num">{t.contactPage.locationValue}</span>
-          <span className="fact-label">الموقع</span>
-        </div>
+        {facts.map((fact) => (
+          <div key={fact.label} className="fact">
+            <span className="fact-head">
+              <span className="icon-tile">
+                <fact.Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+              </span>
+              <span className="fact-num">{fact.num}</span>
+            </span>
+            <span className="fact-label">{fact.label}</span>
+          </div>
+        ))}
       </section>
 
       <section id="projects" className="scroll-mt-24">

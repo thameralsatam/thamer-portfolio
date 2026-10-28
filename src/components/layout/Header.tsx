@@ -5,7 +5,7 @@ import { Link, useRouter } from '../../router/Router';
 
 export const Header: React.FC = () => {
   const { t } = useLanguage();
-  const { path } = useRouter();
+  const { path, nudge } = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -26,6 +26,8 @@ export const Header: React.FC = () => {
     setMenuOpen(false);
   }, [path]);
 
+  const isActive = (to: string) => (to === '/' ? path === '/' : path.startsWith(to));
+
   const links = [
     { to: '/', label: t.nav.home },
     { to: '/projects', label: t.nav.projects },
@@ -42,7 +44,7 @@ export const Header: React.FC = () => {
 
         <nav className="hidden items-center gap-10 md:flex" aria-label={t.common.mainNav}>
           {links.map((link) => (
-            <Link key={link.to} to={link.to} className="nav-link">
+            <Link key={link.to} to={link.to} className={`nav-link ${isActive(link.to) && nudge > 0 ? (nudge % 2 ? 'ping-a' : 'ping-b') : ''}`}>
               {link.label}
             </Link>
           ))}
@@ -63,7 +65,7 @@ export const Header: React.FC = () => {
       {menuOpen && (
         <nav id="mobile-menu" className="menu-panel container-main pb-6 md:hidden" aria-label={t.common.mainNav}>
           {links.map((link) => (
-            <Link key={link.to} to={link.to} className="menu-link">
+            <Link key={link.to} to={link.to} className="menu-link" onClick={() => setMenuOpen(false)}>
               {link.label}
             </Link>
           ))}

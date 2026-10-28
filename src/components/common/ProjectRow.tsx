@@ -2,7 +2,6 @@ import React from 'react';
 import { Project } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { Link } from '../../router/Router';
-import { StatusBadge } from './StatusBadge';
 import { DirectionalArrow } from './DirectionalArrow';
 import { ProjectIcon } from './ProjectIcon';
 
@@ -38,9 +37,7 @@ export const ProjectRow: React.FC<ProjectRowProps> = ({ project, index }) => {
       </div>
       <h3 className="project-title">{loc.title}</h3>
       <p className="project-summary">{loc.summary}</p>
-      <StatusBadge statusKey={project.statusKey} className="meta" />
       <div className="card-foot">
-        <p className="tech-line">{project.technologies.join(' · ')}</p>
         <span className="card-cta">
           <span>{t.common.viewProject}</span>
           <DirectionalArrow direction="forward" className="cta-arrow h-4 w-4" />
