@@ -61,25 +61,25 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-24 sm:space-y-36">
-      <section className="relative pt-4 sm:pt-10 lg:pt-14">
+      <section className="relative pt-2 sm:pt-6 lg:pt-8">
         <div className="hero-glow" aria-hidden="true" />
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-start">
-          {/* العمود الأول: النص الترحيبي والعنوان وأزرار الإجراء */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 lg:items-center">
+          {/* العمود الأول: النص الترحيبي والعنوان وأزرار الإجراء بمحاذاة متناسقة */}
           <div className="lg:col-span-7">
             <Reveal>
               <p className="eyebrow">{t.home.eyebrow}</p>
             </Reveal>
             <Reveal delay={90}>
-              <h1 className="display mt-6 sm:mt-8">
+              <h1 className="display mt-3 sm:mt-4">
                 <Words text={t.home.heroHeadline} />
               </h1>
             </Reveal>
             <Reveal delay={180}>
-              <p className="lead mt-6 sm:mt-8">{t.home.heroDescription}</p>
+              <p className="lead mt-4 sm:mt-5">{t.home.heroDescription}</p>
             </Reveal>
             <Reveal delay={270}>
-              <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-4">
                 <a href="#projects" className="btn btn-primary">
                   <span>{t.home.exploreWork}</span>
                   <ArrowDown className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
@@ -91,8 +91,8 @@ export const HomePage: React.FC = () => {
             </Reveal>
           </div>
 
-          {/* العمود الثاني: لوحة الإحصائيات والمشاريع التفاعلية تملأ المساحة المقابلة بتناسق */}
-          <div className="lg:col-span-5 lg:pt-2">
+          {/* العمود الثاني: لوحة الإحصائيات والمشاريع التفاعلية */}
+          <div className="lg:col-span-5">
             <Reveal delay={200}>
               <div aria-label={t.home.stats.aria} className="facts-container">
                 <div className="facts">

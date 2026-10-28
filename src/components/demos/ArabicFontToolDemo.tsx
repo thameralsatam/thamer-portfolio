@@ -1,9 +1,34 @@
 import React, { useRef, useState } from 'react';
 import { PenTool, RotateCcw } from 'lucide-react';
 import { DemoFrame } from './DemoFrame';
+import { useLanguage } from '../../context/LanguageContext';
 
 type Point = { x: number; y: number };
 type Handle = 'p1' | 'p2';
+
+const STRINGS = {
+  ar: {
+    title: 'فاحص منحنيات بيزييه',
+    note: 'اسحب النقطتين لتغيير شكل الخط. نموذج مصغّر يحاكي فكرة الأداة.',
+    handle1: 'نقطة التحكم الأولى',
+    handle2: 'نقطة التحكم الثانية',
+    reset: 'إعادة المنحنى',
+  },
+  en: {
+    title: 'Bézier Curve Inspector',
+    note: 'Drag the control points to alter the curve. Simulates the tool concept.',
+    handle1: 'First control handle',
+    handle2: 'Second control handle',
+    reset: 'Reset curve',
+  },
+  de: {
+    title: 'Bézier-Kurven-Inspektor',
+    note: 'Ziehe an den Kontrollpunkten, um die Kurve zu formen. Simuliert das Werkzeug.',
+    handle1: 'Erster Steuerpunkt',
+    handle2: 'Zweiter Steuerpunkt',
+    reset: 'Kurve zurücksetzen',
+  },
+};
 
 const W = 160;
 const H = 100;
@@ -15,6 +40,9 @@ const START_P2: Point = { x: 106, y: 92 };
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
 
 export const ArabicFontToolDemo: React.FC = () => {
+  const { language } = useLanguage();
+  const s = STRINGS[language] || STRINGS.ar;
+
   const svgRef = useRef<SVGSVGElement>(null);
   const [p1, setP1] = useState<Point>(START_P1);
   const [p2, setP2] = useState<Point>(START_P2);
@@ -75,8 +103,8 @@ export const ArabicFontToolDemo: React.FC = () => {
   return (
     <DemoFrame
       icon={<PenTool className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />}
-      title="فاحص منحنيات بيزييه"
-      note="اسحب النقطتين لتغيير شكل الخط. نموذج مصغّر يحاكي فكرة الأداة."
+      title={s.title}
+      note={s.note}
       footer={
         <span dir="ltr" className="inline-block">
           P1 ({p1.x}, {p1.y}) · P2 ({p2.x}, {p2.y})
@@ -100,10 +128,15 @@ export const ArabicFontToolDemo: React.FC = () => {
           <path d={d} fill="none" stroke="#a35b3a" strokeWidth="1.6" strokeLinecap="round" />
           <circle cx={P0.x} cy={P0.y} r="2.6" fill="#2b2218" />
           <circle cx={P3.x} cy={P3.y} r="2.6" fill="#2b2218" />
-          {handleDot('p1', p1, 'نقطة التحكم الأولى')}
-          {handleDot('p2', p2, 'نقطة التحكم الثانية')}
+          {handleDot('p1', p1, s.handle1)}
+          {handleDot('p2', p2, s.handle2)}
         </svg>
-        <button type="button" onClick={reset} className="icon-btn absolute end-7 top-9" aria-label="إعادة المنحنى">
+        <button
+          type="button"
+          onClick={reset}
+          className="icon-btn absolute end-7 top-9"
+          aria-label={s.reset}
+        >
           <RotateCcw className="h-4 w-4" strokeWidth={1.5} />
         </button>
       </div>
