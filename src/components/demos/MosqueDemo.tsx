@@ -87,7 +87,7 @@ export const MosqueDemo: React.FC = () => {
                 aria-label={spot.name}
                 onClick={() => setActiveId(spot.id)}
                 style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-                className={`absolute grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-sm transition-all duration-300 ${
+                className={`absolute grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full text-sm transition-all duration-300 ${
                   selected
                     ? 'scale-110 bg-ink-900 text-paper-50 shadow-lg'
                     : 'border border-line-strong bg-paper-50 text-ink-700 hover:scale-110'

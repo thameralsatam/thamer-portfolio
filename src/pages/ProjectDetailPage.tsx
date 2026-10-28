@@ -110,7 +110,7 @@ export const ProjectDetailPage: React.FC = () => {
         {story.map((block, i) => (
           <Reveal key={block.label} delay={i * 40}>
             <div className="border-t border-line py-10 md:grid md:grid-cols-[11rem_1fr] md:gap-10">
-              <h2 className="heading mb-3 md:mb-0">{block.label}</h2>
+              <h2 className="heading mb-3 md:sticky md:top-28 md:mb-0 md:self-start">{block.label}</h2>
               <p className="prose-ar">{block.text}</p>
             </div>
           </Reveal>
@@ -132,7 +132,7 @@ export const ProjectDetailPage: React.FC = () => {
         </section>
       </Reveal>
 
-      <nav className="mt-10 grid grid-cols-2 gap-6 border-t border-line pt-6">
+      <nav className="mt-16 grid gap-4 sm:grid-cols-2">
         {prev ? (
           <Link to={`/projects/${prev.slug}`} className="pager">
             <span className="eyebrow">{t.common.prevProject}</span>

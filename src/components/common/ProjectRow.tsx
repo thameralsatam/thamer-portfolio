@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { Link } from '../../router/Router';
 import { StatusBadge } from './StatusBadge';
 import { DirectionalArrow } from './DirectionalArrow';
+import { ProjectIcon } from './ProjectIcon';
 
 interface ProjectRowProps {
   project: Project;
@@ -11,24 +12,40 @@ interface ProjectRowProps {
 }
 
 export const ProjectRow: React.FC<ProjectRowProps> = ({ project, index }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const loc = project.translations[language];
 
   return (
-    <Link to={`/projects/${project.slug}`} className="project-row">
-      <span className="index" aria-hidden="true">
-        {String(index + 1).padStart(2, '0')}
-      </span>
-      <div className="min-w-0 space-y-3">
-        <div className="meta">
-          <span>{loc.category}</span>
-          <StatusBadge statusKey={project.statusKey} />
-        </div>
-        <h3 className="project-title">{loc.title}</h3>
-        <p className="project-summary">{loc.summary}</p>
-        <p className="tech-line">{project.technologies.join(' · ')}</p>
+    <Link
+      to={`/projects/${project.slug}`}
+      className="project-card"
+      onPointerMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+      }}
+    >
+      <div className="card-top">
+        <span className="flex items-center gap-3">
+          <span className="icon-tile">
+            <ProjectIcon id={project.id} />
+          </span>
+          <span className="meta">{loc.category}</span>
+        </span>
+        <span className="card-index" aria-hidden="true">
+          {String(index + 1).padStart(2, '0')}
+        </span>
       </div>
-      <DirectionalArrow direction="forward" className="arrow h-6 w-6" />
+      <h3 className="project-title">{loc.title}</h3>
+      <p className="project-summary">{loc.summary}</p>
+      <StatusBadge statusKey={project.statusKey} className="meta" />
+      <div className="card-foot">
+        <p className="tech-line">{project.technologies.join(' · ')}</p>
+        <span className="card-cta">
+          <span>{t.common.viewProject}</span>
+          <DirectionalArrow direction="forward" className="cta-arrow h-4 w-4" />
+        </span>
+      </div>
     </Link>
   );
 };

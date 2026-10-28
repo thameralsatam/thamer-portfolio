@@ -23,6 +23,7 @@ export interface UIStrings {
     nextProject: string;
     notFoundTitle: string;
     notFoundText: string;
+    viewProject: string;
   };
   home: {
     eyebrow: string;
@@ -66,7 +67,7 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
     siteTitle: 'ثامر السطام',
     nav: { home: 'الرئيسية', projects: 'المشاريع', about: 'عني', contact: 'التواصل' },
     status: {
-      fontat: 'يعمل وظيفياً، ويحتاج إلى مراجعة أمنية وخصوصية قبل الاستخدام الموثوق',
+      fontat: 'يعمل وظيفياً، ويحتاج مراجعة أمنية قبل الاعتماد عليه',
       umayyad_mosque: 'نموذج أولي جاهز للتقييم، وليس موقعاً رسمياً',
       trainingsplan: 'مشروع شخصي، الحالة قيد التأكيد',
       studio_lab: 'قيد التطوير',
@@ -91,6 +92,7 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       nextProject: 'المشروع التالي',
       notFoundTitle: 'لم أجد هذا المشروع',
       notFoundText: 'قد يكون الرابط خاطئاً. يمكنك العودة إلى قائمة المشاريع.',
+      viewProject: 'افتح المشروع',
     },
     home: {
       eyebrow: 'معرض أعمال',

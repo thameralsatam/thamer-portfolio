@@ -81,7 +81,7 @@ export const TrainingsplanDemo: React.FC = () => {
               type="button"
               onClick={() => toggle(e.id)}
               aria-pressed={e.done}
-              className="flex w-full items-center justify-between gap-4 py-4 text-start"
+              className="flex min-h-14 w-full items-center justify-between gap-4 py-4 text-start"
             >
               <span className="flex items-center gap-4">
                 <span

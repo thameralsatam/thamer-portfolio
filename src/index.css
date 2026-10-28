@@ -371,3 +371,385 @@
   }
   .reveal { opacity: 1; transform: none; }
 }
+
+
+/* ===== صقل التصميم والحركة (الدفعة 2) ===== */
+@layer components {
+  /* سلّم الطباعة: أصغر قليلاً وأكثر اتزاناً، وأسطر أقصر للقراءة */
+  .display { font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1.4; letter-spacing: -0.005em; }
+  .title { font-size: clamp(1.75rem, 3.8vw, 2.5rem); }
+  .lead { font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 2; max-width: 36rem; }
+  .prose-ar { font-size: 1.0625rem; line-height: 2.1; max-width: 38rem; }
+  .project-title { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .pager .pager-title { font-size: clamp(1.25rem, 2.6vw, 1.5rem); }
+  p, li { text-wrap: pretty; }
+
+  /* حالة المشروع: النقطة تتبع السطر الأول، والنص الطويل يلتف بترتيب */
+  .status { align-items: flex-start; max-width: 36rem; line-height: 1.8; }
+  .status .dot { margin-top: 0.7em; }
+  .meta { row-gap: 0.5rem; }
+
+  /* إيقاع المسافات في قائمة المشاريع */
+  .project-row { padding: 2.5rem 0; gap: 1rem 2rem; }
+  .project-row .index { padding-top: 0.75rem; min-width: 2ch; }
+  .project-row .arrow { margin-top: 0.75rem; }
+  @media (max-width: 639px) {
+    .project-row { padding: 2rem 0; }
+    .project-row::before { inset: 0.25rem -0.75rem; }
+  }
+
+  /* أزرار أريح للمس */
+  .btn { min-height: 3rem; justify-content: center; }
+  .icon-btn { min-width: 2.75rem; min-height: 2.75rem; }
+
+  /* الظهور: أنعم وأبطأ قليلاً، وبدون ارتجاف */
+  .reveal {
+    transform: translateY(18px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { will-change: auto; }
+
+  /* خط العنوان الصغير يُرسم عند الظهور */
+  .reveal .eyebrow::before {
+    transform: scaleX(0);
+    transform-origin: var(--origin);
+    transition: transform 0.9s var(--ease) 0.15s;
+  }
+  .reveal.is-visible .eyebrow::before { transform: scaleX(1); }
+
+  /* انتقال الصفحة: ظهور مع صعود خفيف */
+  .page-enter { animation: pageInUp 0.6s var(--ease) both; }
+
+  /* التجارب: تفاعل أنعم عند اللمس والتركيز */
+  .surface { transition: box-shadow 0.5s var(--ease); }
+  .surface:focus-within {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 28px 56px -32px rgba(90, 62, 40, 0.45);
+  }
+
+  /* الأجهزة اللمسية: لا تأثيرات تعلق بعد اللمس */
+  @media (hover: none) {
+    .project-row::before { display: none; }
+    .project-row:active { background: rgba(248, 238, 230, 0.6); }
+    .btn-primary:hover { transform: none; }
+  }
+}
+
+@keyframes pageInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .eyebrow::before { transform: none; }
+  .page-enter { animation: none; }
+}
+
+
+/* ===== الدفعة 3: شريط التقدم، عناصر التحكم، تفاعل القوائم ===== */
+@layer components {
+
+  /* سهم "الأعلى" يرتفع بنعومة */
+  .text-link .icon-lift { transition: transform 0.35s var(--ease); }
+  .text-link:hover .icon-lift { transform: translateY(-3px); }
+
+  /* قائمة المشاريع: العنوان والرقم يستجيبان مع الخلفية */
+  .project-title { transition: color 0.4s var(--ease); }
+  .project-row .index { transition: color 0.4s var(--ease); }
+  .project-row:hover .project-title,
+  .project-row:focus-visible .project-title { color: var(--color-clay-700); }
+  .project-row:hover .index,
+  .project-row:focus-visible .index { color: var(--color-clay-600); }
+
+  /* قائمة الجوال: ظهور متتابع للروابط */
+  .menu-panel .menu-link {
+    opacity: 0;
+    animation: menuIn 0.45s var(--ease) both;
+  }
+  .menu-panel .menu-link:nth-child(1) { animation-delay: 40ms; }
+  .menu-panel .menu-link:nth-child(2) { animation-delay: 90ms; }
+  .menu-panel .menu-link:nth-child(3) { animation-delay: 140ms; }
+  .menu-panel .menu-link:nth-child(4) { animation-delay: 190ms; }
+
+  /* مؤشرات الشرائح (الحجم والوزن...): مسار نحيف ومقبض واضح */
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.5rem;
+    background: transparent;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-line-strong);
+  }
+  input[type='range']::-moz-range-track {
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-line-strong);
+  }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: -0.5rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-paper-50);
+    background: var(--color-clay-600);
+    box-shadow: 0 2px 6px rgba(43, 34, 24, 0.25);
+    transition: transform 0.25s var(--ease);
+  }
+  input[type='range']::-moz-range-thumb {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-paper-50);
+    background: var(--color-clay-600);
+    box-shadow: 0 2px 6px rgba(43, 34, 24, 0.25);
+  }
+  input[type='range']:active::-webkit-slider-thumb { transform: scale(1.15); }
+
+  /* قائمة التقنيات والمزايا: مسافات أهدأ */
+  .feature-list li { padding-block: 0.1rem; }
+  .tech-line { letter-spacing: 0.01em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel .menu-link { opacity: 1; animation: none; }
+}
+
+
+/* ===== الدفعة 4: بطاقات المشاريع وبطاقات التنقل ===== */
+@layer components {
+  .project-list { display: grid; gap: 1.25rem; border-bottom: 0; }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(250, 244, 234, 0.85));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 18px 40px -30px rgba(90, 62, 40, 0.4);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+  }
+  @media (min-width: 640px) {
+    .project-card { padding: 2.25rem 2.5rem; gap: 1rem; }
+  }
+  .project-card .card-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .project-card .card-index {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--color-ink-400);
+    font-variant-numeric: tabular-nums;
+  }
+  .project-card .project-title { transition: color 0.4s var(--ease); }
+  .project-card .status { font-size: 0.875rem; }
+  .project-card .card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    margin-top: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+  .project-card .tech-line { flex: 1 1 14rem; }
+
+  /* الزر: واضح من البداية أنه مكان يُدخل إليه */
+  .project-card .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 999px;
+    font-weight: 400;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--color-ink-900);
+    background: rgba(255, 255, 255, 0.55);
+    transition: background-color 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .project-card .cta-arrow { transition: transform 0.4s var(--ease); }
+
+  @media (hover: hover) {
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-line-strong);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 28px 52px -30px rgba(90, 62, 40, 0.5);
+    }
+    .project-card:hover .project-title { color: var(--color-clay-700); }
+    .project-card:hover .card-cta { background: var(--color-ink-900); border-color: var(--color-ink-900); color: var(--color-paper-50); }
+    .project-card:hover .cta-arrow { transform: translateX(calc(var(--shift) * 4px)); }
+  }
+  .project-card:active { transform: scale(0.99); }
+  .project-card:focus-visible { border-color: var(--color-clay-600); }
+
+  /* التنقل بين المشاريع: بطاقتان بدل نص مجرد */
+  .pager {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.4);
+    transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+  }
+  .pager:hover { border-color: var(--color-line-strong); background: rgba(255, 255, 255, 0.75); }
+}
+
+
+/* ===== الدفعة 5: الارتقاء الكبير ===== */
+
+/* ملمس ورق خفيف جداً فوق الصفحة كلها */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  /* عنوان الرئيسية: كل كلمة تصعد من خلف قناع */
+  .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-block: 0.22em;
+    margin-block: -0.22em;
+  }
+  .word {
+    display: inline-block;
+    transform: translateY(120%);
+    animation: wordUp 1s var(--ease) forwards;
+  }
+
+  /* الزخرفة الهندسية في الرئيسية */
+  .hero-ornament {
+    position: absolute;
+    inset-inline-end: -9rem;
+    top: -4rem;
+    z-index: -1;
+    width: min(30rem, 90vw);
+    height: auto;
+    color: var(--color-clay-600);
+    opacity: 0.32;
+    pointer-events: none;
+    animation: ornamentSpin 160s linear infinite;
+  }
+  .hero-ornament .ornament-lines > * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ornamentDraw 3.2s var(--ease) forwards;
+  }
+  .hero-ornament .ornament-lines > *:nth-child(2) { animation-delay: 0.25s; }
+  .hero-ornament .ornament-lines > *:nth-child(3) { animation-delay: 0.5s; }
+  .hero-ornament .ornament-lines > *:nth-child(4) { animation-delay: 0.75s; }
+  .hero-ornament .ornament-lines > *:nth-child(5) { animation-delay: 1s; }
+
+  /* ضوء ناعم يتبع المؤشر داخل البطاقة */
+  .project-card { position: relative; isolation: isolate; overflow: hidden; }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgba(214, 150, 110, 0.18), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    .project-card:hover::after { opacity: 1; }
+  }
+}
+
+@keyframes wordUp { to { transform: none; } }
+@keyframes ornamentSpin { to { transform: rotate(360deg); } }
+@keyframes ornamentDraw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .word { transform: none; animation: none; }
+  .hero-ornament { animation: none; }
+  .hero-ornament .ornament-lines > * { stroke-dashoffset: 0; animation: none; }
+}
+
+
+/* ===== الدفعة 7: تهدئة وأداء ===== */
+body::after { display: none; }
+.hero-ornament { display: none; }
+.project-card::after { display: none; }
+.hero-scroll { animation: none; }
+.word { transform: none; animation: none; }
+
+@layer components {
+  .site-header.is-scrolled {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(253, 250, 244, 0.95);
+  }
+  .hero-glow { animation: none; }
+  .reveal { transform: translateY(8px); transition-duration: 0.6s; will-change: auto; }
+}
+
+/* ===== الدفعة 8: أشكال وأيقونات وترتيب ===== */
+@layer components {
+  /* مربع الأيقونة الموحد */
+  .icon-tile {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+    color: var(--color-clay-700);
+    background: var(--color-clay-50);
+    border: 1px solid var(--color-clay-100);
+  }
+
+  /* الأزرار: زوايا مستديرة هادئة بدل الكبسولة */
+  .btn { border-radius: 0.875rem; }
+  .icon-btn { border-radius: 0.75rem; }
+  .project-card .card-cta { border-radius: 0.75rem; }
+
+  /* حالة المشروع داخل البطاقة: شارة واضحة بدل نص مبعثر */
+  .project-card .status {
+    align-self: flex-start;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.6rem;
+    background: var(--color-clay-50);
+    color: var(--color-clay-700);
+    line-height: 1.7;
+  }
+
+  /* شريط المعلومات السريعة في الرئيسية */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--color-line);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.45);
+    overflow: hidden;
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 1.4rem 0.75rem;
+    text-align: center;
+  }
+  .fact + .fact { border-inline-start: 1px solid var(--color-line); }
+  .fact-num {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3.4vw, 2rem);
+    line-height: 1.4;
+    color: var(--color-ink-900);
+  }
+  .fact-label { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-500); }
+}

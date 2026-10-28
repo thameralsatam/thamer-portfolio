@@ -19,7 +19,7 @@ export const ProjectsPage: React.FC = () => {
         <p className="lead mt-8">{t.projectsPage.description}</p>
       </Reveal>
 
-      <div className="project-list mt-16 sm:mt-24">
+      <div className="project-list mt-12 sm:mt-16">
         {projects.map((project, i) => (
           <Reveal key={project.id} delay={i * 70}>
             <ProjectRow project={project} index={i} />

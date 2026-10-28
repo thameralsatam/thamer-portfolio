@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 interface RouterContextType {
   path: string;
@@ -39,8 +40,16 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (to === path) return;
     // For universal static compatibility on Cloudflare Pages and preview environments
     window.history.pushState({}, '', to);
-    setPath(to);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const apply = () => {
+      setPath(to);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+    const doc = document as unknown as { startViewTransition?: (cb: () => void) => unknown };
+    if (doc.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      doc.startViewTransition(() => flushSync(apply));
+    } else {
+      apply();
+    }
   };
 
   // Simple route parameter parsing (e.g. /projects/:slug)
