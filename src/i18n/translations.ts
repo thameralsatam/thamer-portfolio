@@ -13,7 +13,11 @@ export interface UIStrings {
     backToProjects: string;
     liveDemo: string;
     sourceCode: string;
-    interactiveStage: string;
+    galleryTitle: string;
+    openImage: string;
+    closeImage: string;
+    prevImage: string;
+    nextImage: string;
     problem: string;
     solution: string;
     roleAndAiUsage: string;
@@ -89,7 +93,11 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       backToProjects: 'كل المشاريع',
       liveDemo: 'زيارة الموقع',
       sourceCode: 'الشيفرة المصدرية',
-      interactiveStage: 'جرّب بنفسك',
+      galleryTitle: 'لقطات من المشروع',
+      openImage: 'تكبير الصورة',
+      closeImage: 'إغلاق',
+      prevImage: 'الصورة السابقة',
+      nextImage: 'الصورة التالية',
       problem: 'لماذا بنيته',
       solution: 'ما يفعله',
       roleAndAiUsage: 'دوري والذكاء الاصطناعي',
@@ -176,7 +184,11 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       backToProjects: 'All projects',
       liveDemo: 'Visit site',
       sourceCode: 'Source code',
-      interactiveStage: 'Try it yourself',
+      galleryTitle: 'Project screenshots',
+      openImage: 'Enlarge image',
+      closeImage: 'Close',
+      prevImage: 'Previous image',
+      nextImage: 'Next image',
       problem: 'Why I built it',
       solution: 'What it does',
       roleAndAiUsage: 'My role and AI',
@@ -263,7 +275,11 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       backToProjects: 'Alle Projekte',
       liveDemo: 'Website besuchen',
       sourceCode: 'Quellcode',
-      interactiveStage: 'Probier es selbst aus',
+      galleryTitle: 'Projekt-Screenshots',
+      openImage: 'Bild vergrößern',
+      closeImage: 'Schließen',
+      prevImage: 'Vorheriges Bild',
+      nextImage: 'Nächstes Bild',
       problem: 'Warum ich es gebaut habe',
       solution: 'Was es macht',
       roleAndAiUsage: 'Meine Rolle und die KI',

@@ -6,11 +6,8 @@ import { projects, getProjectBySlug } from '../data/projects';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Reveal } from '../components/common/Reveal';
 import { DirectionalArrow } from '../components/common/DirectionalArrow';
-import { FontatDemo } from '../components/demos/FontatDemo';
-import { MosqueDemo } from '../components/demos/MosqueDemo';
-import { TrainingsplanDemo } from '../components/demos/TrainingsplanDemo';
-import { StudioLabDemo } from '../components/demos/StudioLabDemo';
-import { ArabicFontToolDemo } from '../components/demos/ArabicFontToolDemo';
+import { ProjectGallery } from '../components/common/ProjectGallery';
+import { getProjectGallery } from '../data/gallery';
 
 export const ProjectDetailPage: React.FC = () => {
   const { t, language } = useLanguage();
@@ -35,22 +32,7 @@ export const ProjectDetailPage: React.FC = () => {
   const next = index < projects.length - 1 ? projects[index + 1] : null;
   const loc = project.translations[language];
 
-  const renderDemo = () => {
-    switch (project.id) {
-      case 'fontat':
-        return <FontatDemo />;
-      case 'umayyad-mosque':
-        return <MosqueDemo />;
-      case 'trainingsplan':
-        return <TrainingsplanDemo />;
-      case 'studio-lab':
-        return <StudioLabDemo />;
-      case 'arabic-font-tool':
-        return <ArabicFontToolDemo />;
-      default:
-        return null;
-    }
-  };
+  const shots = getProjectGallery(project.id);
 
   const story = [
     { Icon: Lightbulb, label: t.common.problem, text: loc.problem },
@@ -99,12 +81,14 @@ export const ProjectDetailPage: React.FC = () => {
         )}
       </header>
 
-      <section className="mt-20 sm:mt-28">
-        <Reveal>
-          <p className="eyebrow mb-6">{t.common.interactiveStage}</p>
-          {renderDemo()}
-        </Reveal>
-      </section>
+      {shots.length > 0 && (
+        <section className="mt-20 sm:mt-28" aria-label={t.common.galleryTitle}>
+          <Reveal>
+            <p className="eyebrow mb-8">{t.common.galleryTitle}</p>
+            <ProjectGallery shots={shots} projectTitle={loc.title} />
+          </Reveal>
+        </section>
+      )}
 
       <section className="mt-20 sm:mt-28">
         {story.map((block, i) => (
