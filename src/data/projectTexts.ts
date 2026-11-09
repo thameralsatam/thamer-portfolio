@@ -81,7 +81,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'I built this for my personal learning journey. I decided the feature set and mobile-first workflow, while utilizing AI to generate code implementations.',
       limitations:
-        'Currently under active development. The AI assistant feature is pending, error logging is incomplete, and no public permanent URL is available yet.',
+        'Currently under active development. The AI assistant feature is pending, and error logging is incomplete.',
       features: [
         'Multiple projects with automatic local storage',
         'File and folder tree directory management',
@@ -189,7 +189,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'Ich habe das Werkzeug für meinen eigenen Lernprozess entwickelt. Ich definierte Funktionsumfang und mobile Bedienung; KI unterstützte mich bei der Code-Erstellung.',
       limitations:
-        'Befindet sich in aktiver Entwicklung. KI-Assistent ist noch deaktiviert, die Fehlerkonsole unvollständig; ein fester öffentlicher Link existiert derzeit nicht.',
+        'Befindet sich in aktiver Entwicklung. KI-Assistent ist noch deaktiviert, die Fehlerkonsole ist unvollständig.',
       features: [
         'Mehrere Projekte mit automatischer lokaler Sicherung',
         'Strukturierte Datei- und Ordnerübersicht',
