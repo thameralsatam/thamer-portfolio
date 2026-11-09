@@ -91,24 +91,27 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       ],
     },
     'arabic-font-tool': {
-      title: 'Arabic Font Tool',
+      title: 'Font Studio',
       category: 'Design Tool · Typography',
       summary:
-        'A browser-based tool in development for drawing Arabic glyphs and adjusting font metrics, complete with text preview and TTF export.',
+        'A browser-based font editor for designing Arabic glyphs and adjusting their metrics and positioning, with text preview and font export.',
       problem:
         'Arabic typography has unique structural and calligraphic needs that generic vector drawing software does not cater to effectively.',
       solution:
-        'An in-browser glyph editor using Bézier curves, specialized Arabic dot shapes, metrics controls for baseline and side-bearings, live Arabic string preview, and TTF font generation.',
+        'An in-browser glyph editor using Bézier curves, specialized Arabic dot shapes, metrics controls for baseline and side-bearings, live Arabic string preview, GSUB and GPOS tables with kerning, a simulation of Arabic letter connections, TTF and WOFF2 export, and offline use.',
       role:
         'The concept, parameters, and design requirements originated from me, constructed with AI assistance in Google AI Studio.',
       limitations:
-        'Under development. The exported font is basic and does not yet support advanced OpenType tables or complex positional substitutions; the preview is not a full shaping engine. No fixed public URL is available yet.',
+        'Under development. The interface and manual are currently Arabic only, and there is no demo project on first launch. The preview simulates letter connections and is not a full shaping engine.',
       features: [
         'Bézier curve drawing with precision control points',
         'Preset Arabic diacritic dot styles and placements',
         'Baseline and side-bearing typographic metric controls',
         'Interactive live Arabic sentence preview',
-        'Direct TTF font file export',
+        'GSUB and GPOS tables with kerning',
+        'Simulation of Arabic letter connections',
+        'Export as TTF and WOFF2',
+        'Works offline',
         'Local browser project saving',
       ],
     },
@@ -199,24 +202,27 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       ],
     },
     'arabic-font-tool': {
-      title: 'Arabisches Schriftwerkzeug',
+      title: 'Font Studio',
       category: 'Designwerkzeug · Typografie',
       summary:
-        'Ein Browser-Werkzeug in Entwicklung zum Zeichnen arabischer Schriftzeichen und Einstellen typografischer Maße mit Textvorschau und TTF-Export.',
+        'Ein Schrift-Editor im Browser zum Gestalten arabischer Glyphen und Einstellen von Maßen und Positionierung, mit Textvorschau und Schriftexport.',
       problem:
         'Die arabische Schrift erfordert spezielle Werkzeuge, die ihren Eigenheiten gerecht werden, anstatt sich auf allgemeine Vektorgrafikprogramme zu beschränken.',
       solution:
-        'Ein Glyphen-Editor mit Bézier-Kurven, typischen arabischen Punktformen, Metrik-Einstellungen für Grundlinie und Vor-/Nachbreite, arabischer Textvorschau und TTF-Schriftexport.',
+        'Ein Glyphen-Editor mit Bézier-Kurven, typischen arabischen Punktformen, Metrik-Einstellungen für Grundlinie und Vor-/Nachbreite, arabischer Textvorschau, GSUB- und GPOS-Tabellen mit Kerning, Simulation der arabischen Buchstabenverbindungen, TTF- und WOFF2-Export sowie Offline-Nutzung.',
       role:
         'Idee, Anforderungen und Konzepte stammen von mir, umgesetzt mit Unterstützung durch KI in Google AI Studio.',
       limitations:
-        'In Entwicklung. Die exportierte Schriftdatei ist grundlegend und deckt noch keine komplexen OpenType-Tabellen oder Glyphen-Positionierungen ab; die Vorschau ist noch keine vollwertige Text-Shaping-Engine. Kein fester öffentlicher Link vorhanden.',
+        'In Entwicklung. Oberfläche und Anleitung sind derzeit nur auf Arabisch, und beim ersten Start gibt es kein Beispielprojekt. Die Vorschau simuliert Buchstabenverbindungen und ist keine vollwertige Shaping-Engine.',
       features: [
         'Pfadbearbeitung mit Bézier-Kurven und Kontrollpunkten',
         'Spezielle Voreinstellungen für arabische Punktformen',
         'Präzise Einstellung von Grundlinien und Seitenstegen',
         'Echtzeit-Vorschau arabischer Beispieltexte',
-        'Direkter Export als TTF-Schriftdatei',
+        'GSUB- und GPOS-Tabellen mit Kerning',
+        'Simulation der arabischen Buchstabenverbindungen',
+        'Export als TTF und WOFF2',
+        'Offline nutzbar',
         'Lokales Speichern von Projekten im Browser',
       ],
     },
