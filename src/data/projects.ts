@@ -109,7 +109,7 @@ const rawProjects: RawProject[] = [
     slug: 'studio-lab',
     statusKey: 'studio_lab',
     featured: false,
-    technologies: ['React', 'TypeScript', 'Monaco Editor', 'IndexedDB'],
+    technologies: ['React', 'TypeScript', 'Monaco Editor', 'localStorage'],
     links: { liveUrl: 'https://code-learn.pages.dev' },
     translations: {
       ar: {
@@ -155,7 +155,7 @@ const rawProjects: RawProject[] = [
           'محرر لرسم المحارف بمنحنيات بيزييه، مع أنماط للنقاط العربية، وضبط للمقاييس مثل خط الأساس والهوامش الجانبية، ومعاينة لنص عربي، وجداول GSUB وGPOS وضبط التقارب (Kerning)، ومحاكاة لاتصال الحروف العربية، وتصدير بصيغتي TTF وWOFF2، ويعمل دون اتصال بالإنترنت.',
         role: 'الفكرة والمتطلبات مني، وبُنيت بمساعدة الذكاء الاصطناعي في Google AI Studio.',
         limitations:
-          'قيد التطوير. الواجهة والدليل بالعربية فقط حالياً، ولا يوجد مشروع تجريبي جاهز عند أول تشغيل. المعاينة محاكاة لاتصال الحروف وليست محرك تشكيل كاملاً.',
+          'قيد التطوير. الواجهة والدليل بالعربية والألمانية فقط (دون الإنكليزية)، ولا يوجد مشروع تجريبي جاهز عند أول تشغيل. المعاينة محاكاة لاتصال الحروف وليست محرك تشكيل كاملاً.',
         features: [
           'رسم المسارات بمنحنيات بيزييه',
           'أنماط النقاط العربية',

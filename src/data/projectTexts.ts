@@ -102,7 +102,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'The concept, parameters, and design requirements originated from me, constructed with AI assistance in Google AI Studio.',
       limitations:
-        'Under development. The interface and manual are currently Arabic only, and there is no demo project on first launch. The preview simulates letter connections and is not a full shaping engine.',
+        'Under development. The interface and manual are currently available in Arabic and German only (no English), and there is no demo project on first launch. The preview simulates letter connections and is not a full shaping engine.',
       features: [
         'Bézier curve drawing with precision control points',
         'Preset Arabic diacritic dot styles and placements',
@@ -213,7 +213,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'Idee, Anforderungen und Konzepte stammen von mir, umgesetzt mit Unterstützung durch KI in Google AI Studio.',
       limitations:
-        'In Entwicklung. Oberfläche und Anleitung sind derzeit nur auf Arabisch, und beim ersten Start gibt es kein Beispielprojekt. Die Vorschau simuliert Buchstabenverbindungen und ist keine vollwertige Shaping-Engine.',
+        'In Entwicklung. Oberfläche und Anleitung gibt es derzeit nur auf Arabisch und Deutsch (kein Englisch), und beim ersten Start gibt es kein Beispielprojekt. Die Vorschau simuliert Buchstabenverbindungen und ist keine vollwertige Shaping-Engine.',
       features: [
         'Pfadbearbeitung mit Bézier-Kurven und Kontrollpunkten',
         'Spezielle Voreinstellungen für arabische Punktformen',
