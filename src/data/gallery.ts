@@ -11,20 +11,22 @@ export interface ProjectShot {
   caption: Record<SupportedLanguage, string>;
 }
 
-const laptop = (file: string, caption: string, width = 1440, height = 900): ProjectShot => ({
+type Caption = Record<SupportedLanguage, string>;
+
+const laptop = (file: string, caption: Caption, width = 1440, height = 900): ProjectShot => ({
   src: file,
   device: 'laptop',
   width,
   height,
-  caption: { ar: caption, en: caption, de: caption },
+  caption,
 });
 
-const phone = (file: string, caption: string, width = 780, height = 1688): ProjectShot => ({
+const phone = (file: string, caption: Caption, width = 780, height = 1688): ProjectShot => ({
   src: file,
   device: 'phone',
   width,
   height,
-  caption: { ar: caption, en: caption, de: caption },
+  caption,
 });
 
 /**
@@ -34,27 +36,27 @@ const phone = (file: string, caption: string, width = 780, height = 1688): Proje
  */
 export const projectGalleries: Record<string, ProjectShot[]> = {
   fontat: [
-    laptop('/projects/fontat/laptop-home.webp', 'الصفحة الرئيسية على الحاسوب', 2612, 1632),
-    laptop('/projects/fontat/laptop-lab.webp', 'مختبر الخطوط: معاينة خط تجريبي وبياناته', 2612, 1632),
-    phone('/projects/fontat/mobile-home.webp', 'الصفحة الرئيسية على الهاتف مع شريط التنقل السفلي', 1408, 3048),
-    phone('/projects/fontat/mobile-lab.webp', 'بيانات الخط في المختبر على الهاتف', 1706, 3688),
+    laptop('/projects/fontat/laptop-home.webp', { ar: 'الصفحة الرئيسية على الحاسوب', en: 'Home page on desktop', de: 'Startseite am Desktop' }, 2612, 1632),
+    laptop('/projects/fontat/laptop-lab.webp', { ar: 'مختبر الخطوط: معاينة خط تجريبي وبياناته', en: 'Font lab: previewing a test font and its data', de: 'Schriftlabor: Vorschau einer Testschrift und ihrer Daten' }, 2612, 1632),
+    phone('/projects/fontat/mobile-home.webp', { ar: 'الصفحة الرئيسية على الهاتف مع شريط التنقل السفلي', en: 'Home page on mobile with bottom navigation bar', de: 'Startseite am Smartphone mit unterer Navigationsleiste' }, 1408, 3048),
+    phone('/projects/fontat/mobile-lab.webp', { ar: 'بيانات الخط في المختبر على الهاتف', en: 'Font data in the lab on mobile', de: 'Schriftdaten im Labor am Smartphone' }, 1706, 3688),
   ],
   'umayyad-mosque': [
-    laptop('/projects/umayyad-mosque/laptop-hero.webp', 'الشاشة الرئيسية'),
-    laptop('/projects/umayyad-mosque/laptop-mosaics.webp', 'قسم الفسيفساء: جدارية وادي بردى'),
-    phone('/projects/umayyad-mosque/mobile-prayer.webp', 'مواقيت الصلاة على الهاتف'),
-    phone('/projects/umayyad-mosque/mobile-history.webp', 'المسار التاريخي على الهاتف'),
+    laptop('/projects/umayyad-mosque/laptop-hero.webp', { ar: 'الشاشة الرئيسية', en: 'Main screen', de: 'Startbildschirm' }),
+    laptop('/projects/umayyad-mosque/laptop-mosaics.webp', { ar: 'قسم الفسيفساء: جدارية وادي بردى', en: 'Mosaics section: the Barada Valley mural', de: 'Mosaik-Bereich: Wandbild des Barada-Tals' }),
+    phone('/projects/umayyad-mosque/mobile-prayer.webp', { ar: 'مواقيت الصلاة على الهاتف', en: 'Prayer times on mobile', de: 'Gebetszeiten am Smartphone' }),
+    phone('/projects/umayyad-mosque/mobile-history.webp', { ar: 'المسار التاريخي على الهاتف', en: 'Historical timeline on mobile', de: 'Historische Zeitleiste am Smartphone' }),
   ],
   'studio-lab': [
-    laptop('/projects/studio-lab/laptop-projects.webp', 'قائمة المشاريع'),
-    laptop('/projects/studio-lab/laptop-editor.webp', 'المحرر مع المعاينة الحية'),
-    phone('/projects/studio-lab/mobile-code.webp', 'المحرر على الهاتف'),
-    phone('/projects/studio-lab/mobile-preview.webp', 'المعاينة على الهاتف'),
+    laptop('/projects/studio-lab/laptop-projects.webp', { ar: 'قائمة المشاريع', en: 'Project list', de: 'Projektliste' }),
+    laptop('/projects/studio-lab/laptop-editor.webp', { ar: 'المحرر مع المعاينة الحية', en: 'Editor with live preview', de: 'Editor mit Live-Vorschau' }),
+    phone('/projects/studio-lab/mobile-code.webp', { ar: 'المحرر على الهاتف', en: 'Editor on mobile', de: 'Editor am Smartphone' }),
+    phone('/projects/studio-lab/mobile-preview.webp', { ar: 'المعاينة على الهاتف', en: 'Preview on mobile', de: 'Vorschau am Smartphone' }),
   ],
   trainingsplan: [
-    phone('/projects/trainingsplan/mobile-schedule.webp', 'جدول التمارين اليومي', 720, 1640),
-    phone('/projects/trainingsplan/mobile-audio.webp', 'مشغّل الصوتيات', 720, 1640),
-    phone('/projects/trainingsplan/mobile-settings.webp', 'الإعدادات والبيانات', 720, 1640),
+    phone('/projects/trainingsplan/mobile-schedule.webp', { ar: 'جدول التمارين اليومي', en: 'Daily workout schedule', de: 'Täglicher Trainingsplan' }, 720, 1640),
+    phone('/projects/trainingsplan/mobile-audio.webp', { ar: 'مشغّل الصوتيات', en: 'Audio player', de: 'Audioplayer' }, 720, 1640),
+    phone('/projects/trainingsplan/mobile-settings.webp', { ar: 'الإعدادات والبيانات', en: 'Settings and data', de: 'Einstellungen und Daten' }, 720, 1640),
   ],
 };
 

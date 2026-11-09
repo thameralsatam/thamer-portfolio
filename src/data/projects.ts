@@ -167,6 +167,16 @@ const rawProjects: RawProject[] = [
 ];
 
 // أي لغة لا يتوفر نصها بعد تعرض النص العربي بدل أن تتعطل الصفحة.
+/**
+ * عدّادات الصفحة الرئيسية تُحدَّث يدوياً من هنا (معرّفات المشاريع).
+ * published: المشاريع المنشورة، inDevelopment: المشاريع قيد التطوير.
+ * قد يظهر المشروع في القائمتين إن كان منشوراً ويُطوَّر معاً.
+ */
+export const homeStats = {
+  published: ['fontat', 'umayyad-mosque', 'studio-lab', 'arabic-font-tool'],
+  inDevelopment: ['studio-lab', 'arabic-font-tool'],
+};
+
 export const projects: Project[] = rawProjects.map((p) => ({
   ...p,
   translations: {
