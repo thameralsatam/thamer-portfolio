@@ -18,7 +18,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'I conceived the platform and user interface, connected the database and storage, designed data relationships, and set up the server pipeline for font operations. I utilized AI (Google AI Studio) to assist with code authoring. Development took several months, with database architecture and security being the most challenging aspects for me as a beginner.',
       limitations:
-        'The project is functionally operational, but requires a thorough security and privacy audit before it can be deemed production-ready for wider public use. The repository is private.',
+        'The project is functionally operational, but requires a thorough security and privacy audit before it can be deemed production-ready for wider public use.',
       features: [
         'Searchable font library with instant live preview',
         'Personal user workspace to organize and save fonts',
@@ -129,7 +129,7 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
       role:
         'Ich habe das Plattformkonzept und die Benutzeroberfläche entworfen, an Datenbank und Speicher angebunden, die Datenlogik gestaltet und die Schriftverarbeitung mit dem Server verknüpft. Beim Schreiben des Codes habe ich KI (Google AI Studio) eingesetzt. Die Entwicklung dauerte mehrere Monate; Datenbankarchitektur und Sicherheit waren als Einsteiger die größte Herausforderung.',
       limitations:
-        'Das Projekt funktioniert technisch, erfordert jedoch eine Sicherheits- und Datenschutzprüfung vor einem zuverlässigen breiteren Einsatz. Das Repository ist privat.',
+        'Das Projekt funktioniert technisch, erfordert jedoch eine Sicherheits- und Datenschutzprüfung vor einem zuverlässigen breiteren Einsatz.',
       features: [
         'Schriftbibliothek mit Suche, Filterung und Live-Vorschau',
         'Persönliches Konto zur Organisation gespeicherter Schriften',
