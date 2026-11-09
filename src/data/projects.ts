@@ -17,7 +17,7 @@ const rawProjects: RawProject[] = [
     statusKey: 'fontat',
     featured: true,
     technologies: ['React', 'TypeScript', 'Supabase', 'Python', 'Cloudflare Pages'],
-    links: { liveUrl: 'https://fontat.pages.dev' },
+    links: { liveUrl: 'https://fontat.pages.dev', githubUrl: 'https://github.com/thameralsatam/fontat' },
     translations: {
       ar: {
         title: 'فونتات',
@@ -31,7 +31,7 @@ const rawProjects: RawProject[] = [
         role:
           'تصورت المنصة والواجهة، وربطتها بقاعدة البيانات والتخزين، وصممت منطق إدارة البيانات والعلاقات، وربطت الموقع بخادم يعالج عمليات الخطوط. استعنت بالذكاء الاصطناعي (Google AI Studio) في كتابة الشيفرة. استغرق العمل عدة أشهر، وكانت قاعدة البيانات والأمان أصعب ما فيه عليّ كمبتدئ.',
         limitations:
-          'المشروع يعمل وظيفياً، لكنه يحتاج إلى مراجعة أمنية وخصوصية قبل اعتباره جاهزاً للاستخدام الموثوق على نطاق أوسع. مستودعه خاص.',
+          'المشروع يعمل وظيفياً، لكنه يحتاج إلى مراجعة أمنية وخصوصية قبل اعتباره جاهزاً للاستخدام الموثوق على نطاق أوسع.',
         features: [
           'مكتبة خطوط مع استعراض وبحث ومعاينة',
           'حساب ومساحة شخصية للخطوط المحفوظة',
