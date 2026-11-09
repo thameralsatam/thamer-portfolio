@@ -143,7 +143,7 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       approachHeading: 'طريقتي في العمل',
       approachText:
         'أكتب في كل مشروع ما فعلته أنا، وما ساعد فيه الذكاء الاصطناعي، وما لم يكتمل بعد. أفضّل أن يكون الموقع صريحاً على أن يبدو أكمل مما هو.',
-      seekingText: 'أبحث عن مكان تدريب مهني في تطوير التطبيقات في ألمانيا.',
+      seekingText: 'أبحث عن مكان تدريب مهني في تطوير التطبيقات في ألمانيا، وعن تدريب مدرسي (Schülerpraktikum) في مجال تطوير البرمجيات.',
     },
     contactPage: {
       eyebrow: 'التواصل',
@@ -234,7 +234,7 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       approachHeading: 'How I work',
       approachText:
         'In every project I write what I did myself, where AI helped, and what is not finished yet. I prefer the site to be honest rather than look more complete than it is.',
-      seekingText: 'I am looking for a vocational training place (Ausbildung) in application development in Germany.',
+      seekingText: 'I am looking for a vocational training place (Ausbildung) in application development in Germany, and for a school internship (Schülerpraktikum) in software development.',
     },
     contactPage: {
       eyebrow: 'Contact',
@@ -325,7 +325,7 @@ export const translations: Record<SupportedLanguage, UIStrings> = {
       approachHeading: 'Wie ich arbeite',
       approachText:
         'Bei jedem Projekt schreibe ich, was ich selbst gemacht habe, wobei mir KI geholfen hat und was noch nicht fertig ist. Mir ist eine ehrliche Website lieber als eine, die vollständiger wirkt, als sie ist.',
-      seekingText: 'Ich suche einen Ausbildungsplatz in der Anwendungsentwicklung in Deutschland.',
+      seekingText: 'Ich suche einen Ausbildungsplatz in der Anwendungsentwicklung in Deutschland sowie ein Schülerpraktikum in der Softwareentwicklung.',
     },
     contactPage: {
       eyebrow: 'Kontakt',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowDown, Globe, Hammer, Layers, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { getFeaturedProjects, projects } from '../data/projects';
+import { getFeaturedProjects, homeStats, projects } from '../data/projects';
 import { Link } from '../router/Router';
 import { Reveal } from '../components/common/Reveal';
 import { ProjectRow } from '../components/common/ProjectRow';
@@ -11,6 +11,8 @@ import { Words } from '../components/common/Words';
 export const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
   const featured = getFeaturedProjects();
+  const publishedProjects = projects.filter((p) => homeStats.published.includes(p.id));
+  const inDevProjects = projects.filter((p) => homeStats.inDevelopment.includes(p.id));
   const [activeFactIndex, setActiveFactIndex] = useState<number | null>(null);
 
   const factsData = [
@@ -30,10 +32,9 @@ export const HomePage: React.FC = () => {
     {
       id: 'live',
       Icon: Globe,
-      num: projects.filter((p) => p.links.liveUrl).length,
+      num: publishedProjects.length,
       label: t.home.stats.live,
-      items: projects
-        .filter((p) => p.links.liveUrl)
+      items: publishedProjects
         .map((p) => ({
           slug: p.slug,
           title: p.translations[language].title,
@@ -45,10 +46,9 @@ export const HomePage: React.FC = () => {
     {
       id: 'inProgress',
       Icon: Hammer,
-      num: projects.filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool').length,
+      num: inDevProjects.length,
       label: t.home.stats.inProgress,
-      items: projects
-        .filter((p) => p.statusKey === 'studio_lab' || p.statusKey === 'arabic_font_tool')
+      items: inDevProjects
         .map((p) => ({
           slug: p.slug,
           title: p.translations[language].title,
