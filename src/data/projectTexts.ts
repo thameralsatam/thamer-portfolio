@@ -25,6 +25,9 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
         'Custom user font uploads',
         'Interactive tools for font metrics and variable font axes',
         'Detailed specimen pages for individual typefaces and glyphs',
+        'Personal notes and tags on saved fonts',
+        'Export a font preview as a video (MP4 or WebM)',
+        'Download individual glyphs as SVG',
       ],
     },
     'umayyad-mosque': {
@@ -136,6 +139,9 @@ export const projectTexts: Partial<Record<SupportedLanguage, Record<string, Proj
         'Upload eigener Schriftdateien durch Nutzer',
         'Werkzeuge zum Testen von Schriftachsen und variablen Fonts',
         'Detaillierte Einzelseiten für Schriften und Schriftzeichen',
+        'Persönliche Notizen und Tags für gespeicherte Schriften',
+        'Schriftvorschau als Video exportieren (MP4 oder WebM)',
+        'Einzelne Glyphen als SVG herunterladen',
       ],
     },
     'umayyad-mosque': {
