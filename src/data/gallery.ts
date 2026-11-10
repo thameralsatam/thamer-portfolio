@@ -53,6 +53,12 @@ export const projectGalleries: Record<string, ProjectShot[]> = {
     phone('/projects/studio-lab/mobile-code.webp', { ar: 'المحرر على الهاتف', en: 'Editor on mobile', de: 'Editor am Smartphone' }),
     phone('/projects/studio-lab/mobile-preview.webp', { ar: 'المعاينة على الهاتف', en: 'Preview on mobile', de: 'Vorschau am Smartphone' }),
   ],
+  'arabic-font-tool': [
+    laptop('/projects/font-studio/laptop-glyphs.webp', { ar: 'شبكة المحارف ولوحة معلومات الخط', en: 'Glyph grid and font overview panel', de: 'Glyphenraster und Schriftübersicht' }),
+    laptop('/projects/font-studio/laptop-editor.webp', { ar: 'محرر المحرف مع المساطر وخطوط المقاييس', en: 'Glyph editor with rulers and metric guides', de: 'Glyphen-Editor mit Linealen und Metriklinien' }),
+    phone('/projects/font-studio/mobile-glyphs.webp', { ar: 'شبكة المحارف على الهاتف', en: 'Glyph grid on mobile', de: 'Glyphenraster am Smartphone' }),
+    phone('/projects/font-studio/mobile-editor.webp', { ar: 'محرر المحرف على الهاتف', en: 'Glyph editor on mobile', de: 'Glyphen-Editor am Smartphone' }),
+  ],
   trainingsplan: [
     phone('/projects/trainingsplan/mobile-schedule.webp', { ar: 'جدول التمارين اليومي', en: 'Daily workout schedule', de: 'Täglicher Trainingsplan' }, 720, 1640),
     phone('/projects/trainingsplan/mobile-audio.webp', { ar: 'مشغّل الصوتيات', en: 'Audio player', de: 'Audioplayer' }, 720, 1640),
