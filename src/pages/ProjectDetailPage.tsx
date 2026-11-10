@@ -32,7 +32,7 @@ export const ProjectDetailPage: React.FC = () => {
   const next = index < projects.length - 1 ? projects[index + 1] : null;
   const loc = project.translations[language];
 
-  const shots = getProjectGallery(project.id);
+  const shots = getProjectGallery(project.id, language);
 
   const story = [
     { Icon: Lightbulb, label: t.common.problem, text: loc.problem },
