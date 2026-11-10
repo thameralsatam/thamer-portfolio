@@ -51,7 +51,10 @@ const rawProjects: RawProject[] = [
     statusKey: 'umayyad_mosque',
     featured: true,
     technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
-    links: { liveUrl: 'https://umayyad.pages.dev' },
+    links: {
+      liveUrl: 'https://umayyad.pages.dev',
+      githubUrl: 'https://github.com/thameralsatam/Umayyad',
+    },
     translations: {
       ar: {
         title: 'الجامع الأموي الكبير',
@@ -113,7 +116,10 @@ const rawProjects: RawProject[] = [
     statusKey: 'studio_lab',
     featured: false,
     technologies: ['React', 'TypeScript', 'Monaco Editor', 'localStorage'],
-    links: { liveUrl: 'https://code-learn.pages.dev' },
+    links: {
+      liveUrl: 'https://code-learn.pages.dev',
+      githubUrl: 'https://github.com/thameralsatam/Programming_learn',
+    },
     translations: {
       ar: {
         title: 'ستوديو لاب',
