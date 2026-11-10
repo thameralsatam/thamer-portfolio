@@ -84,7 +84,7 @@ const rawProjects: RawProject[] = [
     statusKey: 'trainingsplan',
     featured: true,
     technologies: ['React', 'TypeScript', 'Capacitor', 'IndexedDB'],
-    links: {},
+    links: { githubUrl: 'https://github.com/thameralsatam/Fitness' },
     translations: {
       ar: {
         title: 'خطة التدريب',
