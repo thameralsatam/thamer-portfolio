@@ -9,6 +9,8 @@ export interface ProjectShot {
   width: number;
   height: number;
   caption: Record<SupportedLanguage, string>;
+  /** إن حُدِّدت تُعرض اللقطة لهذه اللغة فقط (الإنجليزية تأخذ لقطات الألمانية عند غياب لقطاتها). */
+  lang?: SupportedLanguage;
 }
 
 type Caption = Record<SupportedLanguage, string>;
@@ -60,12 +62,20 @@ export const projectGalleries: Record<string, ProjectShot[]> = {
     phone('/projects/font-studio/mobile-editor.webp', { ar: 'محرر المحرف على الهاتف', en: 'Glyph editor on mobile', de: 'Glyphen-Editor am Smartphone' }),
   ],
   trainingsplan: [
-    phone('/projects/trainingsplan/mobile-schedule.webp', { ar: 'جدول التمارين اليومي', en: 'Daily workout schedule', de: 'Täglicher Trainingsplan' }, 720, 1640),
-    phone('/projects/trainingsplan/mobile-audio.webp', { ar: 'مشغّل الصوتيات', en: 'Audio player', de: 'Audioplayer' }, 720, 1640),
-    phone('/projects/trainingsplan/mobile-settings.webp', { ar: 'الإعدادات والبيانات', en: 'Settings and data', de: 'Einstellungen und Daten' }, 720, 1640),
+    { ...phone('/projects/trainingsplan/de-schedule.webp', { ar: 'جدول التمارين اليومي', en: 'Daily workout schedule', de: 'Täglicher Trainingsplan' }, 780, 1688), lang: 'de' },
+    { ...phone('/projects/trainingsplan/de-audio.webp', { ar: 'مشغّل الصوتيات', en: 'Audio player', de: 'Audioplayer' }, 780, 1688), lang: 'de' },
+    { ...phone('/projects/trainingsplan/de-settings.webp', { ar: 'الإعدادات والبيانات', en: 'Settings and data', de: 'Einstellungen und Daten' }, 780, 1688), lang: 'de' },
+    { ...phone('/projects/trainingsplan/ar-schedule.webp', { ar: 'جدول التمارين اليومي', en: 'Daily workout schedule', de: 'Täglicher Trainingsplan' }, 780, 1688), lang: 'ar' },
+    { ...phone('/projects/trainingsplan/ar-audio.webp', { ar: 'مشغّل الصوتيات', en: 'Audio player', de: 'Audioplayer' }, 780, 1688), lang: 'ar' },
+    { ...phone('/projects/trainingsplan/ar-settings.webp', { ar: 'الإعدادات والبيانات', en: 'Settings and data', de: 'Einstellungen und Daten' }, 780, 1688), lang: 'ar' },
   ],
 };
 
-export function getProjectGallery(projectId: string): ProjectShot[] {
-  return projectGalleries[projectId] ?? [];
+export function getProjectGallery(projectId: string, lang?: SupportedLanguage): ProjectShot[] {
+  const shots = projectGalleries[projectId] ?? [];
+  if (!lang || !shots.some((s) => s.lang)) return shots;
+  const own = shots.filter((s) => !s.lang || s.lang === lang);
+  if (own.some((s) => s.lang)) return own;
+  // لا لقطات بهذه اللغة: نعرض الألمانية كلغة افتراضية.
+  return shots.filter((s) => !s.lang || s.lang === 'de');
 }
